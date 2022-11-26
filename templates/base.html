@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="/static/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/hospital.css">
+</head>
+<body style="background-color: rgba(185,204,228,0.8)">
+<nav class="navbar navbar-default navbar-fixed-top" id="navbar">
+    <div class="col-md-4">
+        <ul class="menu">
+            <div style="position:absolute; top: 8px;">
+                <li><a href="#" id="nav">Home</a></li>
+                <li><a href="#" id="nav">Pet</a></li>
+                {% block nav %}{% endblock %}
+            </div>
+        </ul>
+    </div><!-- /.col-md-4-->
+    <div class="col-md-4">
+        <div class="navbar-logo">
+            <a class="navbar-logo" href="#">
+                <img id="logo" alt="Brand" src="/static/logo.png">
+            </a>
+        </div>
+        <div style="position:absolute; top: 8px;left: 100px;">
+            <h class="navbar-name" href="#">Charlie Pet Hospital</h>
+        </div>
+    </div><!-- /.col-md-4-->
+    <div class="col-md-4">
+        <ul class="menu">
+            <div style="position:absolute; top: 8px;left: 300px">
+                <li><a href="#" id="nav">Sign in</a></li>
+                <li><a href="#" id="nav">Sign up</a></li>
+            </div>
+        </ul>
+    </div><!-- /.col-md-4-->
+</nav>
+<div class="container">
+    {% block body %}{% endblock %}
+</div>
+</body>
+</html>

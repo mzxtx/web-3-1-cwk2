@@ -1,11 +1,21 @@
 from flask import Flask
+import config
+from exts import db
+from blueprints import pet_bp
+from blueprints import user_bp
+import os
+
 
 app = Flask(__name__)
+# Bind database configuration
+app.config.from_object(config)
+db.init_app(app)
 
+app.register_blueprint(pet_bp)
+app.register_blueprint(user_bp)
 
-@app.route('/')
-def hello_world():  # put application's code here
-    return 'Hello World!'
+#set secret key
+app.config['SECRET_KEY'] = os.urandom(24)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,34 @@
+#navbar {
+    background-color: #5885D5FF;
+}
+
+#logo {
+    width: 70px;
+    height: 70px;
+}
+
+.navbar-name {
+    color: white;
+    font-weight: bold;
+    font-size: 40px;
+}
+
+li {
+    list-style-type: none;
+    float: left;
+}
+
+#nav {
+    display: block; /*Turn a into a block*/
+    width: 100px; /*Set the width of the block*/
+    height: 62px; /*Set the height of the block*/
+    line-height: 50px; /*Set the height of the font in the block*/
+    background-color: #FFFFFF00;
+    color: white;
+    text-align: center; /*Center font*/
+    text-decoration: none; /*Remove the underline*/
+    font-size: 20px;
+}
+#nav:hover,#nav:active{
+    background-color: #3c73d2;
+}
