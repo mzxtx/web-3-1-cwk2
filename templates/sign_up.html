@@ -1,0 +1,68 @@
+{#注册#}
+{% extends "base.html" %}
+
+{% block title %}Charlie Pet Hospital - Sign up{% endblock %}
+
+{% block nav %}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3"></div><!-- /.col-md-3 -->
+            <div class="col-md-6" id="sign-up">
+                <div id="in-title" class="text-center">
+                    <h1>Sign Up</h1>
+                </div>
+                <form class="form-horizontal" method="post" action="{{ url_for('user.sign_up') }}">
+                    <div class="row" id="in-text">
+                        {#Email#}
+                        <div class="form-group">
+                            <label for="email" class="fs-1">Email</label>
+                            <input type="email" class="form-control" id="email"
+                                   placeholder="Please input the email"
+                                   name="email">
+                            <small class="form-text text-muted">We guarantee that we will not use the mailbox for other
+                                purposes.</small>
+                        </div>
+                        {#User Name#}
+                        <div class="form-group">
+                            <label for="name" class="fs-1">User Name</label>
+                            <input type="text" class="form-control" id="name"
+                                   placeholder="Please input the user name"
+                                   name="username">
+                            <small class="form-text text-muted">Please enter 2~20 characters</small>
+                        </div>
+                        {#Password#}
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password"
+                                   placeholder="Please input the password"
+                                   name="password">
+                            <small class="form-text text-muted">Please enter 6~20 characters</small>
+                        </div>
+                        {#Confirm Password#}
+                        <div class="form-group">
+                            <label for="confirm">Confirm Password</label>
+                            <input type="password" class="form-control"
+                                   placeholder="Please confirm the password"
+                                   name="password_confirm">
+                            <small class="form-text text-muted">Please enter 6~20 characters</small>
+                        </div>
+                        {#                        <div class="form-group">#}
+                        {#                            <div class="col-sm-offset-2 col-sm-10">#}
+                        {#                                <div class="checkbox">#}
+                        {#                                    <label>#}
+                        {#                                        <input type="checkbox"> Remember me#}
+                        {#                                    </label>#}
+                        {#                                </div>#}
+                        {#                            </div>#}
+                        {#                        </div>#}
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block">Sign up</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

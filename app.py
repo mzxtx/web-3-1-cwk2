@@ -3,6 +3,8 @@ import config
 from exts import db
 from blueprints import pet_bp
 from blueprints import user_bp
+from flask_migrate import Migrate
+
 import os
 
 
@@ -10,6 +12,8 @@ app = Flask(__name__)
 # Bind database configuration
 app.config.from_object(config)
 db.init_app(app)
+
+migrate = Migrate(app,db)
 
 app.register_blueprint(pet_bp)
 app.register_blueprint(user_bp)

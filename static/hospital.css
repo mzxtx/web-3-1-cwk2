@@ -32,3 +32,27 @@ li {
 #nav:hover,#nav:active{
     background-color: #3c73d2;
 }
+
+
+#sign-in{
+    margin-top: 15%;
+    background-color: rgba(245, 245, 245, 0.6);
+    border-radius: 12px;
+}
+#in-title{
+    margin-top: 10%;
+    margin-bottom: 5%;
+    color: #5885D5FF;
+    font-weight: bold;
+}
+#in-text{
+    margin-left: 15%;
+    margin-right: 15%;
+    margin-bottom: 10%;
+}
+
+#sign-up{
+    margin-top: 10%;
+    background-color: rgba(245, 245, 245, 0.6);
+    border-radius: 12px;
+}
