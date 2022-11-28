@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Charlie Pet Hospital - Charlie User{% endblock %}
+{% block background %}
+style="background-image: url(/static/background-1.jpg);background-size: 100%,100%"
+{% endblock %}
+{% block nav %}
+    <li><a href="{{ url_for('user.adm_user') }}" id="nav">User</a></li>
+    <li><a href="#" id="nav">Pet</a></li>
+    <li><a href="{{ url_for('user.adm_serve') }}" id="nav">Serve</a></li>
+{% endblock %}
+
+{% block body %}
+    <div id="adm_serve_nav">
+        <ul class="nav nav-stacked">
+            <li><a href="#" id="adm_serve_menu">All</a></li>
+            <li><a href="#" id="adm_serve_menu">Cat</a></li>
+            <li ><a href="#" id="adm_serve_menu">Dog</a></li>
+            <li ><a href="#" id="adm_serve_menu">Vaccine</a></li>
+            <li ><a href="#" id="adm_serve_menu">Operation</a></li>
+            <li ><a href="#" id="adm_serve_menu">Health Examination</a></li>
+            <li ><a href="#" id="adm_serve_menu">Expelling parasiting</a></li>
+        </ul>
+    </div>
+
+
+{% endblock %}

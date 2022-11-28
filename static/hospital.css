@@ -1,16 +1,12 @@
 #navbar {
-    background-color: #5885D5FF;
+    background-color: rgba(0, 0, 0, 0.35);
 }
 
 #logo {
-    width: 70px;
+    width: 500px;
     height: 70px;
-}
-
-.navbar-name {
-    color: white;
-    font-weight: bold;
-    font-size: 40px;
+    margin-left: 50px;
+    margin-right: 50px;
 }
 
 li {
@@ -28,15 +24,16 @@ li {
     text-align: center; /*Center font*/
     text-decoration: none; /*Remove the underline*/
     font-size: 20px;
+    margin-top: 10px;
 }
 #nav:hover,#nav:active{
-    background-color: #3c73d2;
+    background-color: rgba(0, 0, 0, 0.51);
 }
 
 
 #sign-in{
     margin-top: 15%;
-    background-color: rgba(245, 245, 245, 0.6);
+    background-color: rgba(210, 210, 210, 0.68);
     border-radius: 12px;
 }
 #in-title{
@@ -53,6 +50,23 @@ li {
 
 #sign-up{
     margin-top: 10%;
-    background-color: rgba(245, 245, 245, 0.6);
+    background-color: rgba(210, 210, 210, 0.68);
     border-radius: 12px;
+}
+
+#adm_serve_nav{
+    margin-top: 70px;
+    width: 250px;
+    height: 682px;
+    background-color: rgba(0, 0, 0, 0.35);
+    text-align: center;
+}
+
+#adm_serve_menu{
+    color: white;
+    font-size: 20px;
+    margin-top: 40px;
+}
+#adm_serve_menu:hover,#adm_serve_menu:active{
+    background-color: rgba(0, 0, 0, 0.51);
 }

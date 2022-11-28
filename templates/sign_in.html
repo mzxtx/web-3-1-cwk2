@@ -2,8 +2,15 @@
 {% extends "base.html" %}
 
 {% block title %}Charlie Pet Hospital - Sign in{% endblock %}
-
-{% block nav %}{% endblock %}
+{% block background %}
+style="background-image: url(/static/background-1.jpg);background-size: 100%,100%"
+{% endblock %}
+{% block nav %}
+    <li><a href="{{ url_for('index.index') }}" id="nav">Home</a></li>
+    <li>
+        <a href="#" id="nav">Serve</a>
+    </li>
+{% endblock %}
 
 {% block body %}
     <div class="container">

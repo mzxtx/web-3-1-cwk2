@@ -8,3 +8,4 @@ class UserModel(db.Model):
     email = db.Column(db.String(100),nullable=False,unique=True)
     password = db.Column(db.String(200),nullable=False)
     join_time = db.Column(db.DateTime,default=datetime.now)
+

@@ -6,44 +6,28 @@
     <link rel="stylesheet" type="text/css" href="/static/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/static/hospital.css">
 </head>
-<body style="background-color: rgba(185,204,228,0.8)">
+<body {% block background %}{% endblock %}>
 <nav class="navbar navbar-default navbar-fixed-top" id="navbar">
-    <div class="col-md-4">
-        <ul class="menu">
-            <div style="position:absolute; top: 8px;">
-                <li><a href="{{ url_for('index.index') }}" id="nav">Home</a></li>
-                {% block nav %}{% endblock %}
+    <li>
+        <a class="navbar-logo">
+            <img id="logo" alt="Brand" src="/static/logo.png">
+        </a>
+    </li>
+    <ul class="menu">
+        {% block nav %}{% endblock %}
+        {% if user %}
+            <div style="position:absolute;right: 50px">
+                <li><a id="nav">{{ user.username }}</a></li>
+                <li><a href="{{ url_for('user.sign_out') }}" id="nav">Sign out</a></li>
             </div>
-        </ul>
-    </div><!-- /.col-md-4-->
-    <div class="col-md-4">
-        <div class="navbar-logo">
-            <a class="navbar-logo">
-                <img id="logo" alt="Brand" src="/static/logo.png">
-            </a>
-        </div>
-        <div style="position:absolute; top: 8px;left: 100px;">
-            <h class="navbar-name">Charlie Pet Hospital</h>
-        </div>
-    </div><!-- /.col-md-4-->
-    <div class="col-md-4">
-        <ul class="menu">
-            {% if user %}
-                <div style="position:absolute; top: 8px;left: 300px">
-                    <li><a id="nav">{{ user.username }}</a></li>
-                    <li><a href="{{ url_for('user.sign_out') }}" id="nav">Sign out</a></li>
-                </div>
-            {% else %}
-                <div style="position:absolute; top: 8px;left: 300px">
-                    <li><a href="{{ url_for('user.sign_in') }}" id="nav">Sign in</a></li>
-                    <li><a href="{{ url_for('user.sign_up') }}" id="nav">Sign up</a></li>
-                </div>
-            {% endif %}
-        </ul>
-    </div><!-- /.col-md-4-->
+        {% else %}
+            <div style="position:absolute;right: 50px">
+                <li><a href="{{ url_for('user.sign_in') }}" id="nav">Sign in</a></li>
+                <li><a href="{{ url_for('user.sign_up') }}" id="nav">Sign up</a></li>
+            </div>
+        {% endif %}
+    </ul>
 </nav>
-<div class="container">
     {% block body %}{% endblock %}
-</div>
 </body>
 </html>

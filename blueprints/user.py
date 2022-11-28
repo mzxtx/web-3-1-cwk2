@@ -1,12 +1,13 @@
 # login interface
-from flask import Blueprint, render_template, request, redirect, url_for, session,flash
+from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 from exts import db
 from model import UserModel
 from .form import Sign_up_Form, Sign_in_Form
 
 bp = Blueprint("user", __name__, url_prefix="/user")
 
-#sign in
+
+# sign in
 @bp.route("/sign_in", methods=['GET', 'POST'])
 def sign_in():
     if request.method == 'GET':
@@ -17,9 +18,13 @@ def sign_in():
             email = form.email.data
             password = form.password.data
             user = UserModel.query.filter_by(email=email).first()
-            if user and user.password == password:
-                session['user_id'] = user.id
-                return redirect(url_for("user.index_user"))
+            adm = UserModel.query.filter_by(email="Charlie@adm.com")[0]
+            if adm and adm.password == password:
+                session['user_id'] = adm.id
+                return redirect(url_for("user.adm_user"))
+            elif user and user.password == password:
+                    session['user_id'] = user.id
+                    return redirect(url_for("user.index_user"))
             else:
                 flash("The email address and password do not match.")
                 return redirect(url_for("user.sign_in"))
@@ -27,7 +32,8 @@ def sign_in():
             flash("The email or password format is incorrect.")
             return redirect(url_for("user.sign_in"))
 
-#sign up
+
+# sign up
 @bp.route("/sign_up", methods=['GET', 'POST'])
 def sign_up():
     if request.method == 'GET':
@@ -46,15 +52,25 @@ def sign_up():
         else:
             return redirect(url_for("user.sign_up"))
 
-#sign out
+
+# sign out
 @bp.route("/sign_out")
 def sign_out():
-    #Clear all data in the session
+    # Clear all data in the session
     session.clear()
     return redirect(url_for('user.sign_in'))
 
-
+# user interface
 @bp.route("/index")
 def index_user():
     return render_template("index-user.html")
 
+# Administrator Interface
+@bp.route("/adm/user")
+def adm_user():
+    return render_template("adm-user.html")
+
+# Administrator Interface - Serve
+@bp.route("/adm/serve")
+def adm_serve():
+    return render_template("adm-serve.html")
