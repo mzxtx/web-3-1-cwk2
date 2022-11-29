@@ -74,3 +74,8 @@ def adm_user():
 @bp.route("/adm/serve")
 def adm_serve():
     return render_template("adm-serve.html")
+
+#add serve
+@bp.route("/adm/serve/add")
+def serve_add():
+    return render_template("add_serve.html")

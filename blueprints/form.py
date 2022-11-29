@@ -1,6 +1,6 @@
 import  wtforms
 from wtforms.validators import length,email,EqualTo
-from model import UserModel
+from model import UserModel,ServeModel
 
 #Sign in Form
 class Sign_in_Form(wtforms.Form):

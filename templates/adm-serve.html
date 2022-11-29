@@ -2,7 +2,7 @@
 
 {% block title %}Charlie Pet Hospital - Charlie User{% endblock %}
 {% block background %}
-style="background-image: url(/static/background-1.jpg);background-size: 100%,100%"
+    style="background-image: url(/static/background-1.jpg);background-size: 100%,100%"
 {% endblock %}
 {% block nav %}
     <li><a href="{{ url_for('user.adm_user') }}" id="nav">User</a></li>
@@ -13,15 +13,29 @@ style="background-image: url(/static/background-1.jpg);background-size: 100%,100
 {% block body %}
     <div id="adm_serve_nav">
         <ul class="nav nav-stacked">
+            <li>
+                <a href="{{ url_for('user.serve_add') }}" id="adm_serve_menu">
+                    <img id="add_serve_image" src="/static/add.png">
+                    Add Serve
+                </a>
+            </li>
             <li><a href="#" id="adm_serve_menu">All</a></li>
             <li><a href="#" id="adm_serve_menu">Cat</a></li>
-            <li ><a href="#" id="adm_serve_menu">Dog</a></li>
-            <li ><a href="#" id="adm_serve_menu">Vaccine</a></li>
-            <li ><a href="#" id="adm_serve_menu">Operation</a></li>
-            <li ><a href="#" id="adm_serve_menu">Health Examination</a></li>
-            <li ><a href="#" id="adm_serve_menu">Expelling parasiting</a></li>
+            <li><a href="#" id="adm_serve_menu">Dog</a></li>
+            <li><a href="#" id="adm_serve_menu">Vaccine</a></li>
+            <li><a href="#" id="adm_serve_menu">Operation</a></li>
+            <li><a href="#" id="adm_serve_menu">Health Examination</a></li>
+            <li><a href="#" id="adm_serve_menu">Expelling parasiting</a></li>
         </ul>
     </div>
+    {#search box#}
+    <div class="input-group input-group-lg" id="adm_serve_search">
+        <input class="form-control" type="search" placeholder="Search Serve"
+               name="query">
+        <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">Search</button>
+                </span>
+    </div><!-- /input-group -->
 
 
 {% endblock %}

@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}Charlie Pet Hospital - Charlie User{% endblock %}
+{% block background %}
+    style="background-image: url(/static/background-1.jpg);background-size: 100%,100%"
+{% endblock %}
+{% block nav %}
+    <li><a href="{{ url_for('user.adm_user') }}" id="nav">User</a></li>
+    <li><a href="#" id="nav">Pet</a></li>
+    <li><a href="{{ url_for('user.adm_serve') }}" id="nav">Serve</a></li>
+{% endblock %}
+
+{% block body %}
+    <div id="adm_serve_nav">
+        <ul class="nav nav-stacked">
+            <li>
+                <a href="{{ url_for('user.serve_add') }}" id="adm_serve_menu">
+                    <img id="add_serve_image" src="/static/add.png">
+                    Add Serve
+                </a>
+            </li>
+            <li><a href="#" id="adm_serve_menu">All</a></li>
+            <li><a href="#" id="adm_serve_menu">Cat</a></li>
+            <li><a href="#" id="adm_serve_menu">Dog</a></li>
+            <li><a href="#" id="adm_serve_menu">Vaccine</a></li>
+            <li><a href="#" id="adm_serve_menu">Operation</a></li>
+            <li><a href="#" id="adm_serve_menu">Health Examination</a></li>
+            <li><a href="#" id="adm_serve_menu">Expelling parasiting</a></li>
+        </ul>
+    </div>
+    {#search box#}
+    <div class="input-group input-group-lg" id="adm_serve_search">
+        <input class="form-control" type="search" placeholder="Search Serve"
+               name="query">
+        <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">Search</button>
+                </span>
+    </div><!-- /input-group -->
+    <div id="add-serve">
+        <div id="in-title" class="text-center" style="position: relative; top: 30px;">
+            <h1>Add Serve</h1>
+        </div>
+        <form class="form-horizontal" action="#" method="post">
+            <div class="row" id="in-text" style="position: relative; top: 10px;">
+                <div class="form-group">
+                    <label for="servename">Serve Name</label>
+                    <input type="text" class="form-control" id="servename"
+                           placeholder="Please input the serve name"
+                           name="servename">
+                </div>
+                <div class="form-group">
+                    <label for="classification">Classification</label>
+                    <input type="text" class="form-control" id="classification"
+                           placeholder="Please input the classification"
+                           name="classification">
+                </div>
+                <div class="form-group">
+                    <label for="obj">Object</label>
+                    <input type="text" class="form-control" id="obj"
+                           placeholder="Please input the classification"
+                           name="obj">
+                </div>
+                <div class="form-group">
+                    <label for="price">Price</label>
+                    <input type="text" class="form-control" id="price"
+                           placeholder="Please input the classification"
+                           name="price">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea class="form-control" rows="4" id="description"
+                              name="Description"></textarea>
+                </div>
+                {#Error message Prompt#}
+                {% for message in get_flashed_messages() %}
+                    <div class="form-group">
+                        <div class="text-danger">
+                            {{ message }}
+                        </div>
+                    </div>
+                {% endfor %}
+                {#Sign in button#}
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Add</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+{% endblock %}
