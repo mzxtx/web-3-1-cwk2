@@ -1,8 +1,8 @@
 # login interface
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 from exts import db
-from model import UserModel
-from .form import Sign_up_Form, Sign_in_Form
+from model import UserModel, ServeModel
+from .form import Sign_up_Form, Sign_in_Form, Serve_Form
 
 bp = Blueprint("user", __name__, url_prefix="/user")
 
@@ -23,8 +23,8 @@ def sign_in():
                 session['user_id'] = adm.id
                 return redirect(url_for("user.adm_user"))
             elif user and user.password == password:
-                    session['user_id'] = user.id
-                    return redirect(url_for("user.index_user"))
+                session['user_id'] = user.id
+                return redirect(url_for("user.index_user"))
             else:
                 flash("The email address and password do not match.")
                 return redirect(url_for("user.sign_in"))
@@ -50,6 +50,12 @@ def sign_up():
             db.session.commit()
             return redirect(url_for("user.sign_in"))
         else:
+            email = form.email.data
+            user_model = UserModel.query.filter_by(email=email).first()
+            if user_model:
+                flash("The email address has been registered.")
+            else:
+                flash("The message format is incorrect.")
             return redirect(url_for("user.sign_up"))
 
 
@@ -60,22 +66,44 @@ def sign_out():
     session.clear()
     return redirect(url_for('user.sign_in'))
 
+
 # user interface
 @bp.route("/index")
 def index_user():
     return render_template("index-user.html")
+
 
 # Administrator Interface
 @bp.route("/adm/user")
 def adm_user():
     return render_template("adm-user.html")
 
+
 # Administrator Interface - Serve
 @bp.route("/adm/serve")
 def adm_serve():
     return render_template("adm-serve.html")
 
-#add serve
-@bp.route("/adm/serve/add")
+
+# add serve
+@bp.route("/adm/serve/add", methods=['GET', 'POST'])
 def serve_add():
-    return render_template("add_serve.html")
+    if request.method == 'GET':
+        return render_template("add_serve.html")
+    else:
+        form = Serve_Form(request.form)
+        if form.validate():
+            servename = form.servename.data
+            classification = form.classification.data
+            obj = form.obj.data
+            price = form.price.data
+            introduction = form.introduction.data
+
+            serve = ServeModel(servename=servename, classification=classification, obj=obj, price=price,
+                               introduction=introduction)
+            db.session.add(serve)
+            db.session.commit()
+            return redirect(url_for("user.adm_serve"))
+        else:
+            flash("The message format is incorrect.")
+            return redirect(url_for("user.serve_add"))

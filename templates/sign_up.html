@@ -64,6 +64,14 @@ style="background-image: url(/static/background-1.jpg);background-size: 100%,100
                         {#                                </div>#}
                         {#                            </div>#}
                         {#                        </div>#}
+                        {#Error message Prompt#}
+                        {% for message in get_flashed_messages() %}
+                            <div class="form-group">
+                                <div class="text-danger">
+                                    {{ message }}
+                                </div>
+                            </div>
+                        {% endfor %}
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary btn-block">Sign up</button>
                         </div>
