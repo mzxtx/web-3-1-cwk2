@@ -5,6 +5,8 @@
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="/static/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/static/hospital.css">
+    <script src="/static/jquery2.1.1jquery.min.js"></script>
+    <script src="/static/bootstrap3.3.7jsbootstrap.min.js"></script>
 </head>
 <body {% block background %}{% endblock %}>
 <nav class="navbar navbar-default navbar-fixed-top" id="navbar">
@@ -28,6 +30,6 @@
         {% endif %}
     </ul>
 </nav>
-    {% block body %}{% endblock %}
+{% block body %}{% endblock %}
 </body>
 </html>

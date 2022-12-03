@@ -37,5 +37,71 @@
                 </span>
     </div><!-- /input-group -->
 
+    {#sort order#}
+    <div class="dropdown" id="serve_adm_order">
+        <button type="button" class="btn dropdown-toggle" id="dropdownMenu1"
+                data-toggle="dropdown">
+            Sort Order
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu"  aria-labelledby="dropdownMenu1" style="width:20px">
+            <li role="presentation" class="dropdown-item" style="color: gray">Issued Date</li>
+            <li role="presentation">
+                <a class="dropdown-item" role="menuitem" tabindex="-1" href="#">
+                    <img src="/static/ascend.png" style="width: 20px;height: 20px;margin-left: 38px;margin-right: 10px">
+                    Ascend
+                </a>
+            </li>
+            <li role="presentation">
+                <a role="menuitem" class="dropdown-item" tabindex="-1" href="#">
+                    <img src="/static/descend.png" style="width: 17px;height: 20px;margin-left: 39px;margin-right: 3px">
+                    Descend
+                </a>
+            </li>
+            <li role="presentation" class="dropdown-item" style="color: gray">Price</li>
+            <li role="presentation">
+                <a class="dropdown-item" role="menuitem" tabindex="-1" href="#">
+                    <img src="/static/ascend.png" style="width: 20px;height: 20px;margin-left: 38px;margin-right: 10px">
+                    Ascend
+                </a>
+            </li>
+            <li role="presentation">
+                <a role="menuitem" class="dropdown-item" tabindex="-1" href="#">
+                    <img src="/static/descend.png" style="width: 17px;height: 20px;margin-left: 39px;margin-right: 3px">
+                    Descend
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    {#    scroll box#}
+    <div id="serve_adm_scroll" style="overflow-x:hidden;">
+        <table class="table table-hover" id="serve_adm_table" style="width: 1160px">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Classification</th>
+                <th>Object</th>
+                <th>Price</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for serve in serves %}
+                <tr>
+                    <td><a href="" style="color: black;text-decoration: none">{{ serve.servename }}</a></td>
+                    <td>{{ serve.classification }}</td>
+                    <td>{{ serve.obj }}</td>
+                    <td>{{ serve.price }}</td>
+                    <td><a href=""><img src="/static/edit.png" style="height:18px;width: 18px;margin-left: 5px"></a>
+                    </td>
+                    <td><a href=""><img src="/static/delete.png" style="height:18px;width: 18px;margin-left: 12px"></a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
 {% endblock %}

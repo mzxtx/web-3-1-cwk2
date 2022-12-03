@@ -82,7 +82,8 @@ def adm_user():
 # Administrator Interface - Serve
 @bp.route("/adm/serve")
 def adm_serve():
-    return render_template("adm-serve.html")
+    serves = ServeModel.query.all()
+    return render_template("adm-serve.html",serves=serves)
 
 
 # add serve
