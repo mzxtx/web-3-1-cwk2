@@ -27,4 +27,4 @@ class Serve_Form(wtforms.Form):
     classification = wtforms.StringField(validators=[DataRequired()])
     obj = wtforms.StringField(validators=[DataRequired()])
     price = wtforms.FloatField(validators=[DataRequired()])
-    introduction = wtforms.StringField(validators=[length(min=0,max=1000)])
+    introduction = wtforms.StringField(validators=[length(min=0,max=10000)])

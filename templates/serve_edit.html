@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Charlie Pet Hospital - Charlie User{% endblock %}
+{% block title %}Charlie Pet Hospital - Serve Edit - {{ serve.servename }}{% endblock %}
 {% block background %}
     style="background-image: url(/static/background-1.jpg);background-size: 100%,100%"
 {% endblock %}
@@ -40,43 +40,71 @@
         </div>
     </form><!-- /input-group -->
 
-    <div id="add-serve" style="overflow-x:hidden;">
+    <div id="add-serve" style="overflow-x:hidden">
         <div style="width: 600px;float: left;margin-top: 5px;margin-bottom: 10px">
-            <h1 style="color: #5885D5FF;font-weight: bold;margin-left: 250px">Add Serve</h1>
+            <h1 style="color: #5885D5FF;font-weight: bold;margin-left: 250px">Edit Serve</h1>
         </div>
-        <div style="width: 100px;float: right;">
-            <a href="{{ url_for('serve.adm_serve') }}" style="margin-left: 70px">
+        <div style="width: 100px;float: right;margin-left:650px;position: fixed">
+            <a href="{{ url_for('serve.adm_serve') }}">
                 <img src="/static/close.png" style="width: 30px;height: 30px">
             </a>
         </div>
-        <form class="form-horizontal" action="{{ url_for("serve.serve_add") }}" method="post">
-            <div class="row" style="margin-left: 15%;margin-right: 15%;">
+        <form class="form-horizontal" action="{{ url_for("serve.serve_edit",serve_id = serve.id) }}" method="post">
+            <div class="row" style="position: relative; top: 10px;margin-left: 15%;margin-right: 15%;">
                 <div class="form-group">
                     <label for="servename">Serve Name</label>
                     <input type="text" class="form-control" id="servename"
                            placeholder="Please input the serve name"
-                           name="servename">
+                           name="servename" value="{{ serve.servename }}">
                 </div>
                 <div class="form-group">
                     <label for="classification">Classification</label>
                     <select name="classification" class="form-control">
-                        <option value="Vaccine">Vaccine</option>
-                        <option value="Operation">Operation</option>
-                        <option value="Health Examination">Health Examination</option>
-                        <option value="Expelling parasiting">Expelling parasiting</option>
+                        {% if serve.classification == 'Vaccine' %}
+                            <option value="Vaccine" selected>Vaccine</option>
+                        {% else %}
+                            <option value="Vaccine">Vaccine</option>
+                        {% endif %}
+                        {% if serve.classification == 'Operation' %}
+                            <option value="Operation" selected>Operation</option>
+                        {% else %}
+                            <option value="Operation">Operation</option>
+                        {% endif %}
+                        {% if serve.classification == 'Health Examination' %}
+                            <option value="Health Examination" selected>Health Examination</option>
+                        {% else %}
+                            <option value="Health Examination">Health Examination</option>
+                        {% endif %}
+                        {% if serve.classification == 'Expelling parasiting' %}
+                            <option value="Expelling parasiting" selected>Expelling parasiting</option>
+                        {% else %}
+                            <option value="Expelling parasiting">Expelling parasiting</option>
+                        {% endif %}
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="obj">Object</label>
                     <div>
                         <label class="radio-inline">
-                            <input type="radio" name="obj" id="obj-Cat" value="Cat"> Cat
+                            {% if serve.obj == 'Cat' %}
+                                <input type="radio" name="obj" id="obj-Cat" value="Cat" checked> Cat
+                            {% else %}
+                                <input type="radio" name="obj" id="obj-Cat" value="Cat"> Cat
+                            {% endif %}
                         </label>
                         <label class="radio-inline">
-                            <input type="radio" name="obj" id="obj-Dog" value="Dog"> Dog
+                            {% if serve.obj == 'Dog' %}
+                                <input type="radio" name="obj" id="obj-Dog" value="Dog" checked> Dog
+                            {% else %}
+                                <input type="radio" name="obj" id="obj-Dog" value="Dog"> Dog
+                            {% endif %}
                         </label>
                         <label class="radio-inline">
-                            <input type="radio" name="obj" id="obj-Cat/Dog" value="Cat/Dog"> Cat/Dog
+                            {% if serve.obj == 'Cat/Dog' %}
+                                <input type="radio" name="obj" id="obj-Cat/Dog" value="Cat/Dog" checked> Cat/Dog
+                            {% else %}
+                                <input type="radio" name="obj" id="obj-Cat/Dog" value="Cat/Dog"> Cat/Dog
+                            {% endif %}
                         </label>
                     </div>
                 </div>
@@ -84,12 +112,12 @@
                     <label for="price">Price</label>
                     <input type="text" class="form-control" id="price"
                            placeholder="Please input the price(¥)"
-                           name="price">
+                           name="price" value="{{ serve.price }}">
                 </div>
                 <div class="form-group">
-                    <label for="introduction">Introduction</label>
+                    <label for="description">Description</label>
                     <textarea class="form-control" rows="4" id="introduction"
-                              name="introduction"></textarea>
+                              name="introduction">{{ serve.introduction }}</textarea>
                 </div>
                 {#Error message Prompt#}
                 {% for message in get_flashed_messages() %}
@@ -101,11 +129,10 @@
                 {% endfor %}
                 {#Add button#}
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block">Add</button>
+                    <button type="submit" class="btn btn-primary btn-block">Edit</button>
                 </div>
             </div>
         </form>
     </div>
-
 
 {% endblock %}

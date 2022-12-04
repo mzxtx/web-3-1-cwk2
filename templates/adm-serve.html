@@ -7,72 +7,38 @@
 {% block nav %}
     <li><a href="{{ url_for('user.adm_user') }}" id="nav">User</a></li>
     <li><a href="#" id="nav">Pet</a></li>
-    <li><a href="{{ url_for('user.adm_serve') }}" id="nav">Serve</a></li>
+    <li><a href="{{ url_for('serve.adm_serve') }}" id="nav">Serve</a></li>
 {% endblock %}
 
 {% block body %}
     <div id="adm_serve_nav">
         <ul class="nav nav-stacked">
             <li>
-                <a href="{{ url_for('user.serve_add') }}" id="adm_serve_menu">
+                <a href="{{ url_for('serve.serve_add') }}" id="adm_serve_menu">
                     <img id="add_serve_image" src="/static/add.png">
                     Add Serve
                 </a>
             </li>
-            <li><a href="#" id="adm_serve_menu">All</a></li>
-            <li><a href="#" id="adm_serve_menu">Cat</a></li>
-            <li><a href="#" id="adm_serve_menu">Dog</a></li>
-            <li><a href="#" id="adm_serve_menu">Vaccine</a></li>
-            <li><a href="#" id="adm_serve_menu">Operation</a></li>
-            <li><a href="#" id="adm_serve_menu">Health Examination</a></li>
-            <li><a href="#" id="adm_serve_menu">Expelling parasiting</a></li>
+            <li><a href="{{ url_for('serve.adm_serve') }}" id="adm_serve_menu">All</a></li>
+            <li><a href="/serve/search_adm?query=Cat" id="adm_serve_menu">Cat</a></li>
+            <li><a href="/serve/search_adm?query=Dog" id="adm_serve_menu">Dog</a></li>
+            <li><a href="/serve/search_adm?query=Vaccine" id="adm_serve_menu">Vaccine</a></li>
+            <li><a href="/serve/search_adm?query=Operation" id="adm_serve_menu">Operation</a></li>
+            <li><a href="/serve/search_adm?query=Health Examination" id="adm_serve_menu">Health Examination</a></li>
+            <li><a href="/serve/search_adm?query=Expelling parasiting" id="adm_serve_menu">Expelling parasiting</a></li>
         </ul>
     </div>
+
     {#search box#}
-    <div class="input-group input-group-lg" id="adm_serve_search">
-        <input class="form-control" type="search" placeholder="Search Serve"
-               name="query">
-        <span class="input-group-btn">
+    <form method="GET" action="{{ url_for('serve.search_adm') }}">
+        <div class="input-group input-group-lg" id="adm_serve_search">
+            <input class="form-control" type="search" placeholder="Search Serve"
+                   name="query">
+            <span class="input-group-btn">
                     <button class="btn btn-default" type="submit">Search</button>
                 </span>
-    </div><!-- /input-group -->
-
-    {#sort order#}
-    <div class="dropdown" id="serve_adm_order">
-        <button type="button" class="btn dropdown-toggle" id="dropdownMenu1"
-                data-toggle="dropdown">
-            Sort Order
-            <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu"  aria-labelledby="dropdownMenu1" style="width:20px">
-            <li role="presentation" class="dropdown-item" style="color: gray">Issued Date</li>
-            <li role="presentation">
-                <a class="dropdown-item" role="menuitem" tabindex="-1" href="#">
-                    <img src="/static/ascend.png" style="width: 20px;height: 20px;margin-left: 38px;margin-right: 10px">
-                    Ascend
-                </a>
-            </li>
-            <li role="presentation">
-                <a role="menuitem" class="dropdown-item" tabindex="-1" href="#">
-                    <img src="/static/descend.png" style="width: 17px;height: 20px;margin-left: 39px;margin-right: 3px">
-                    Descend
-                </a>
-            </li>
-            <li role="presentation" class="dropdown-item" style="color: gray">Price</li>
-            <li role="presentation">
-                <a class="dropdown-item" role="menuitem" tabindex="-1" href="#">
-                    <img src="/static/ascend.png" style="width: 20px;height: 20px;margin-left: 38px;margin-right: 10px">
-                    Ascend
-                </a>
-            </li>
-            <li role="presentation">
-                <a role="menuitem" class="dropdown-item" tabindex="-1" href="#">
-                    <img src="/static/descend.png" style="width: 17px;height: 20px;margin-left: 39px;margin-right: 3px">
-                    Descend
-                </a>
-            </li>
-        </ul>
-    </div>
+        </div>
+    </form><!-- /input-group -->
 
     {#    scroll box#}
     <div id="serve_adm_scroll" style="overflow-x:hidden;">
@@ -80,9 +46,18 @@
             <thead>
             <tr>
                 <th>Name</th>
-                <th>Classification</th>
-                <th>Object</th>
-                <th>Price</th>
+                <th onclick="sortTable(1)" style="cursor: pointer;">
+                    Classification
+                    <img src="/static/sort.png" style="width: 15px;height: 15px">
+                </th>
+                <th onclick="sortTable(2)" style="cursor: pointer;">
+                    Object
+                    <img src="/static/sort.png" style="width: 15px;height: 15px">
+                </th>
+                <th onclick="sortPrice(3)" style="cursor: pointer;">
+                    Price
+                    <img src="/static/sort.png" style="width: 15px;height: 15px">
+                </th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
@@ -90,13 +65,17 @@
             <tbody>
             {% for serve in serves %}
                 <tr>
-                    <td><a href="" style="color: black;text-decoration: none">{{ serve.servename }}</a></td>
+                    <td><a href="{{ url_for('serve.serve_detail',serve_id = serve.id) }}"
+                           style="color: black;text-decoration: none">{{ serve.servename }}</a></td>
                     <td>{{ serve.classification }}</td>
                     <td>{{ serve.obj }}</td>
                     <td>{{ serve.price }}</td>
-                    <td><a href=""><img src="/static/edit.png" style="height:18px;width: 18px;margin-left: 5px"></a>
+                    <td><a href="{{ url_for('serve.serve_edit',serve_id = serve.id) }}"><img src="/static/edit.png"
+                                                                                             style="height:18px;width: 18px;margin-left: 5px"></a>
                     </td>
-                    <td><a href=""><img src="/static/delete.png" style="height:18px;width: 18px;margin-left: 12px"></a>
+                    <td><a href="{{ url_for('serve.serve_delete',serve_id = serve.id) }}"
+                           onclick="return confirm('Are you sure you want to delete this item?');"><img
+                            src="/static/delete.png" style="height:18px;width: 18px;margin-left: 12px"></a>
                     </td>
                 </tr>
             {% endfor %}

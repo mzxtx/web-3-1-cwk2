@@ -1,8 +1,7 @@
 from flask import Flask,session,g
 import config
 from exts import db
-from blueprints import index_bp
-from blueprints import user_bp
+from blueprints import index_bp,user_bp,serve_bp
 from flask_migrate import Migrate
 from model import UserModel
 import os
@@ -17,6 +16,7 @@ migrate = Migrate(app,db)
 
 app.register_blueprint(index_bp)
 app.register_blueprint(user_bp)
+app.register_blueprint(serve_bp)
 
 # hook function
 @app.before_request

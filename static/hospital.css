@@ -91,7 +91,7 @@ li {
     width: 700px;
     margin-top: 170px;
     margin-left: 500px;
-    background-color: rgba(161, 193, 232, 0.51);
+    background-color: rgba(255, 255, 255, 0.42);
     border-radius: 12px;
     height: 575px;
 }
@@ -102,15 +102,26 @@ li {
     border-radius: 12px;
     height: 550px;
     width: 1200px;
-    margin-top: 142px;
+    margin-top: 170px;
     margin-left: 300px;
 }
 #serve_adm_table{
-    margin: 20px;
+    margin-top: 10px;
+    margin-left: 20px;
 }
 #serve_adm_order{
     top: 110px;
     left: 1250px;
 }
 
-.dropdown-item{display:block;width:100%;padding:.25rem 1.5rem;clear:both;font-weight:400;color:#212529;text-align:inherit;white-space:nowrap;background-color:transparent;border:0}
+.dropdown-item{
+    display:block;
+    width:100%;
+    padding:.25rem 1.5rem;
+    clear:both;
+    font-weight:400;
+    color:#212529;
+    text-align:inherit;
+    white-space:nowrap;
+    background-color:transparent;
+    border:0}
