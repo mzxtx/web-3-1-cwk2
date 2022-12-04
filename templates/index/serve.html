@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title%}Charlie Pet Hospital - Home{% endblock %}
+{% block background %}
+style="background-image: url(/static/background-1.jpg);background-size: 100%,100%"
+{% endblock %}
+{% block nav %}
+    <li>
+        <a href="{{ url_for('index.index') }}" id="nav">Home</a>
+    </li>
+    <li>
+        <a href="{{ url_for('index.serve') }}" id="nav">Serve</a>
+    </li>
+{% endblock %}
+
+{% block body %}
+{#adm serve nav#}
+    <div id="adm_serve_nav">
+        <ul class="nav nav-stacked">
+            <li><a href="{{ url_for('index.serve') }}" id="adm_serve_menu">All</a></li>
+            <li><a href="/search_serve?query=Cat" id="adm_serve_menu">Cat</a></li>
+            <li><a href="/search_serve?query=Dog" id="adm_serve_menu">Dog</a></li>
+            <li><a href="/search_serve?query=Vaccine" id="adm_serve_menu">Vaccine</a></li>
+            <li><a href="/search_serve?query=Operation" id="adm_serve_menu">Operation</a></li>
+            <li><a href="/search_serve?query=Health Examination" id="adm_serve_menu">Health Examination</a></li>
+            <li><a href="/search_serve?query=Expelling parasiting" id="adm_serve_menu">Expelling parasiting</a></li>
+        </ul>
+    </div>
+
+    {#search box#}
+    <form method="GET" action="{{ url_for('index.search_serve') }}">
+        <div class="input-group input-group-lg" id="adm_serve_search">
+            <input class="form-control" type="search" placeholder="Search Serve"
+                   name="query">
+            <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">Search</button>
+                </span>
+        </div>
+    </form><!-- /input-group -->
+
+    {#    scroll box#}
+    <div id="serve_adm_scroll" style="overflow-x:hidden;">
+        <table class="table table-hover" id="serve_adm_table" style="width: 1160px">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th onclick="sortTable(1)" style="cursor: pointer;">
+                    Classification
+                    <img src="/static/sort.png" style="width: 15px;height: 15px">
+                </th>
+                <th onclick="sortTable(2)" style="cursor: pointer;">
+                    Object
+                    <img src="/static/sort.png" style="width: 15px;height: 15px">
+                </th>
+                <th onclick="sortPrice(3)" style="cursor: pointer;">
+                    Price
+                    <img src="/static/sort.png" style="width: 15px;height: 15px">
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for serve in serves %}
+                <tr>
+                    <td><a href="{{ url_for('index.serve_detail',serve_id = serve.id) }}"
+                           style="color: black;text-decoration: none">{{ serve.servename }}</a></td>
+                    <td>{{ serve.classification }}</td>
+                    <td>{{ serve.obj }}</td>
+                    <td>{{ serve.price }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

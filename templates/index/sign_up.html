@@ -8,7 +8,7 @@ style="background-image: url(/static/background-1.jpg);background-size: 100%,100
 {% block nav %}
     <li><a href="{{ url_for('index.index') }}" id="nav">Home</a></li>
     <li>
-        <a href="#" id="nav">Serve</a>
+        <a href="{{ url_for('index.serve') }}" id="nav">Serve</a>
     </li>
 {% endblock %}
 

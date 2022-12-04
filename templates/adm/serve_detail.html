@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Charlie Pet Hospital - Serve Detail - {{ serve.servename }}{% endblock %}
+
+{% block background %}
+    style="background-image: url(/static/background-1.jpg);background-size: 100%,100%"
+{% endblock %}
+
+{% block nav %}
+    <li><a href="{{ url_for('user.adm_user') }}" id="nav">User</a></li>
+    <li><a href="#" id="nav">Pet</a></li>
+    <li><a href="{{ url_for('serve.adm_serve') }}" id="nav">Serve</a></li>
+{% endblock %}
+
+{% block body %}
+    {#adm serve nav#}
+    <div id="adm_serve_nav">
+        <ul class="nav nav-stacked">
+            <li>
+                <a href="{{ url_for('serve.serve_add') }}" id="adm_serve_menu">
+                    <img id="add_serve_image" src="/static/add.png">
+                    Add Serve
+                </a>
+            </li>
+            <li><a href="{{ url_for('serve.adm_serve') }}" id="adm_serve_menu">All</a></li>
+            <li><a href="/serve/search_adm?query=Cat" id="adm_serve_menu">Cat</a></li>
+            <li><a href="/serve/search_adm?query=Dog" id="adm_serve_menu">Dog</a></li>
+            <li><a href="/serve/search_adm?query=Vaccine" id="adm_serve_menu">Vaccine</a></li>
+            <li><a href="/serve/search_adm?query=Operation" id="adm_serve_menu">Operation</a></li>
+            <li><a href="/serve/search_adm?query=Health Examination" id="adm_serve_menu">Health Examination</a></li>
+            <li><a href="/serve/search_adm?query=Expelling parasiting" id="adm_serve_menu">Expelling parasiting</a></li>
+        </ul>
+    </div>
+
+    {#search box#}
+    <form method="GET" action="{{ url_for('serve.search_adm') }}">
+        <div class="input-group input-group-lg" id="adm_serve_search">
+            <input class="form-control" type="search" placeholder="Search Serve"
+                   name="query">
+            <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">Search</button>
+                </span>
+        </div>
+    </form><!-- /input-group -->
+
+    {#serve adm scroll#}
+    <div id="serve_adm_scroll" style="overflow-x:hidden;">
+        <div style="text-align: right">
+            <a href="{{ url_for('serve.adm_serve') }}">
+                <img src="/static/close.png" style="width: 30px;height: 30px">
+            </a>
+        </div>
+        <h1 style="text-align: center">{{ serve.servename }}</h1>
+        <p style="text-align: center">￥{{ serve.price }} | {{ serve.classification }} | {{ serve.obj }}</p>
+        <div style="width: 80%;margin-left: 150px;margin-top: 20px;white-space: pre-line">
+            <p>{{ serve.introduction }}</p>
+        </div>
+    </div>
+{% endblock %}

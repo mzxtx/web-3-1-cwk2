@@ -1,26 +1,22 @@
 {% extends "base.html" %}
 
-{% block title %}Charlie Pet Hospital - Serve Detail - {{ serve.servename }}{% endblock %}
-
+{% block title%}Charlie Pet Hospital - Home{% endblock %}
 {% block background %}
-    style="background-image: url(/static/background-1.jpg);background-size: 100%,100%"
+style="background-image: url(/static/background-1.jpg);background-size: 100%,100%"
 {% endblock %}
-
 {% block nav %}
-    <li><a href="{{ url_for('user.adm_user') }}" id="nav">User</a></li>
-    <li><a href="#" id="nav">Pet</a></li>
-    <li><a href="{{ url_for('serve.adm_serve') }}" id="nav">Serve</a></li>
+    <li>
+        <a href="{{ url_for('index.index') }}" id="nav">Home</a>
+    </li>
+    <li>
+        <a href="{{ url_for('index.serve') }}" id="nav">Serve</a>
+    </li>
 {% endblock %}
 
 {% block body %}
+{#adm serve nav#}
     <div id="adm_serve_nav">
         <ul class="nav nav-stacked">
-            <li>
-                <a href="{{ url_for('serve.serve_add') }}" id="adm_serve_menu">
-                    <img id="add_serve_image" src="/static/add.png">
-                    Add Serve
-                </a>
-            </li>
             <li><a href="{{ url_for('serve.adm_serve') }}" id="adm_serve_menu">All</a></li>
             <li><a href="/serve/search_adm?query=Cat" id="adm_serve_menu">Cat</a></li>
             <li><a href="/serve/search_adm?query=Dog" id="adm_serve_menu">Dog</a></li>
@@ -42,9 +38,10 @@
         </div>
     </form><!-- /input-group -->
 
+    {#serve adm scroll#}
     <div id="serve_adm_scroll" style="overflow-x:hidden;">
         <div style="text-align: right">
-            <a href="{{ url_for('serve.adm_serve') }}">
+            <a href="{{ url_for('index.serve') }}">
                 <img src="/static/close.png" style="width: 30px;height: 30px">
             </a>
         </div>

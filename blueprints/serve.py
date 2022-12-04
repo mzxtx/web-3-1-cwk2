@@ -11,14 +11,14 @@ bp = Blueprint("serve", __name__, url_prefix="/serve")
 @bp.route("/adm/serve")
 def adm_serve():
     serves = ServeModel.query.all()
-    return render_template("adm-serve.html", serves=serves)
+    return render_template("adm/adm-serve.html", serves=serves)
 
 
 # add serve
 @bp.route("/adm/serve/add", methods=['GET', 'POST'])
 def serve_add():
     if request.method == 'GET':
-        return render_template("add_serve.html")
+        return render_template("adm/add_serve.html")
     else:
         form = Serve_Form(request.form)
         if form.validate():
@@ -41,14 +41,14 @@ def serve_add():
 @bp.route("/serve_detial/<int:serve_id>")
 def serve_detail(serve_id):
     serve = ServeModel.query.get(serve_id)
-    return render_template("serve_detail.html", serve=serve)
+    return render_template("adm/serve_detail.html", serve=serve)
 
 # serve edit
 @bp.route("/serve_edit/<int:serve_id>", methods=['GET', 'POST'])
 def serve_edit(serve_id):
     serve = ServeModel.query.get(serve_id)
     if request.method == 'GET':
-        return render_template("serve_edit.html", serve=serve)
+        return render_template("adm/serve_edit.html", serve=serve)
     else:
         form = Serve_Form(request.form)
         if form.validate():
@@ -80,6 +80,6 @@ def search_adm():
                                               ServeModel.obj.contains(query),
                                               ServeModel.price.contains(query),))
 
-    return render_template("adm-serve.html", serves=serves)
+    return render_template("adm/adm-serve.html", serves=serves)
 
 

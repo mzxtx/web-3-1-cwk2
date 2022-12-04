@@ -11,7 +11,7 @@ bp = Blueprint("user", __name__, url_prefix="/user")
 @bp.route("/sign_in", methods=['GET', 'POST'])
 def sign_in():
     if request.method == 'GET':
-        return render_template("sign_in.html")
+        return render_template("index/sign_in.html")
     else:
         form = Sign_in_Form(request.form)
         if form.validate():
@@ -37,7 +37,7 @@ def sign_in():
 @bp.route("/sign_up", methods=['GET', 'POST'])
 def sign_up():
     if request.method == 'GET':
-        return render_template("sign_up.html")
+        return render_template("index/sign_up.html")
     else:
         form = Sign_up_Form(request.form)
         if form.validate():
@@ -70,12 +70,12 @@ def sign_out():
 # user interface
 @bp.route("/index")
 def index_user():
-    return render_template("index-user.html")
+    return render_template("user/index-user.html")
 
 
 # Administrator Interface
 @bp.route("/adm/user")
 def adm_user():
-    return render_template("adm-user.html")
+    return render_template("adm/adm-user.html")
 
 
