@@ -1,34 +1,31 @@
 {% extends "base.html" %}
 
-{% block title%}Charlie Pet Hospital - Home{% endblock %}
+{% block title %}Charlie Pet Hospital - Home{% endblock %}
 {% block background %}
-style="background-image: url(/static/background-1.jpg);background-size: 100%,100%"
+    style="background-image: url(/static/background-1.jpg);background-size: 100%,100%"
 {% endblock %}
 {% block nav %}
-    <li>
-        <a href="{{ url_for('index.index') }}" id="nav">Home</a>
-    </li>
-    <li>
-        <a href="{{ url_for('index.serve') }}" id="nav">Serve</a>
-    </li>
+    <li><a href="{{ url_for('user.index_user') }}" id="nav">Home</a></li>
+    <li><a href="{{ url_for('user.serve') }}" id="nav">Serve</a></li>
+    <li><a href="" id="nav">Pet</a></li>
 {% endblock %}
 
 {% block body %}
-{#adm serve nav#}
+    {#adm serve nav#}
     <div id="adm_serve_nav">
         <ul class="nav nav-stacked">
-            <li><a href="{{ url_for('serve.adm_serve') }}" id="adm_serve_menu">All</a></li>
-            <li><a href="/serve/search_adm?query=Cat" id="adm_serve_menu">Cat</a></li>
-            <li><a href="/serve/search_adm?query=Dog" id="adm_serve_menu">Dog</a></li>
-            <li><a href="/serve/search_adm?query=Vaccine" id="adm_serve_menu">Vaccine</a></li>
-            <li><a href="/serve/search_adm?query=Operation" id="adm_serve_menu">Operation</a></li>
-            <li><a href="/serve/search_adm?query=Health Examination" id="adm_serve_menu">Health Examination</a></li>
-            <li><a href="/serve/search_adm?query=Expelling parasiting" id="adm_serve_menu">Expelling parasiting</a></li>
+            <li><a href="{{ url_for('user.serve') }}" id="adm_serve_menu">All</a></li>
+            <li><a href="/user/search_serve?query=Cat" id="adm_serve_menu">Cat</a></li>
+            <li><a href="/user/search_serve?query=Dog" id="adm_serve_menu">Dog</a></li>
+            <li><a href="/user/search_serve?query=Vaccine" id="adm_serve_menu">Vaccine</a></li>
+            <li><a href="/user/search_serve?query=Operation" id="adm_serve_menu">Operation</a></li>
+            <li><a href="/user/search_serve?query=Health Examination" id="adm_serve_menu">Health Examination</a></li>
+            <li><a href="/user/search_serve?query=Expelling parasiting" id="adm_serve_menu">Expelling parasiting</a></li>
         </ul>
     </div>
 
     {#search box#}
-    <form method="GET" action="{{ url_for('serve.search_adm') }}">
+    <form method="GET" action="{{ url_for('user.search_serve') }}">
         <div class="input-group input-group-lg" id="adm_serve_search">
             <input class="form-control" type="search" placeholder="Search Serve"
                    name="query">
@@ -41,7 +38,7 @@ style="background-image: url(/static/background-1.jpg);background-size: 100%,100
     {#serve detail scroll#}
     <div id="serve_adm_scroll" style="overflow-x:hidden;">
         <div style="text-align: right">
-            <a href="{{ url_for('index.serve') }}">
+            <a href="{{ url_for('user.serve') }}">
                 <img src="/static/close.png" style="width: 30px;height: 30px">
             </a>
         </div>

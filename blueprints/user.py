@@ -3,6 +3,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, sessio
 from exts import db
 from model import UserModel, ServeModel
 from .form import Sign_up_Form, Sign_in_Form, Serve_Form
+from sqlalchemy import or_
 
 bp = Blueprint("user", __name__, url_prefix="/user")
 
@@ -77,5 +78,28 @@ def index_user():
 @bp.route("/adm/user")
 def adm_user():
     return render_template("adm/adm-user.html")
+
+#user serve
+@bp.route("/serve")
+def serve():
+    serves = ServeModel.query.all()
+    return render_template("user/serve.html", serves=serves)
+
+# serve detail
+@bp.route("/serve/detail/<int:serve_id>")
+def serve_detail(serve_id):
+    serve = ServeModel.query.get(serve_id)
+    return render_template("user/serve_detail.html", serve=serve)
+
+# search serve
+@bp.route("/search_serve")
+def search_serve():
+    query = request.args.get("query")
+    serves = ServeModel.query.filter(or_(ServeModel.servename.contains(query),
+                                              ServeModel.classification.contains(query),
+                                              ServeModel.obj.contains(query),
+                                              ServeModel.price.contains(query),))
+
+    return render_template("user/serve.html", serves=serves)
 
 

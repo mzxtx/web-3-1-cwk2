@@ -1,6 +1,6 @@
-function sortTable(n) {
+function sortTable(tablename,n) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-    table = document.getElementById("serve_adm_table");
+    table = document.getElementById(tablename);
     switching = true;
     // 设置升序排列
     dir = "asc";
@@ -48,7 +48,7 @@ function sortTable(n) {
     }
 }
 
-function sortPrice(n) {
+function sortNum(tablename,n) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     table = document.getElementById("serve_adm_table");
     switching = true;
