@@ -20,7 +20,7 @@
         {% block nav %}{% endblock %}
         {% if user %}
             <div style="position:absolute;right: 50px">
-                <li><a id="nav">{{ user.username }}</a></li>
+                <li><a href="{{ url_for('user.personal_edit',user_id = user.id) }}" id="nav">{{ user.username }}</a></li>
                 <li><a href="{{ url_for('user.sign_out') }}" id="nav">Sign out</a></li>
             </div>
         {% else %}

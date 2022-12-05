@@ -1,41 +1,32 @@
 {% extends "base.html" %}
 
-{% block title %}Charlie Pet Hospital - Charlie User{% endblock %}
+{% block title%}Charlie Pet Hospital - Home{% endblock %}
 {% block background %}
-    style="background-image: url(/static/img/background-1.jpg);background-size: 100%,100%"
+style="background-image: url(/static/img/background-1.jpg);background-size: 100%,100%"
 {% endblock %}
 {% block nav %}
-    <li><a href="{{ url_for('user.adm_user') }}" id="nav">User</a></li>
-    <li><a href="" id="nav">Pet</a></li>
-    <li><a href="{{ url_for('serve.adm_serve') }}" id="nav">Serve</a></li>
+    <li>
+        <a href="{{ url_for('index.index') }}" id="nav">Home</a>
+    </li>
+    <li>
+        <a href="{{ url_for('index.serve') }}" id="nav">Serve</a>
+    </li>
 {% endblock %}
 
 {% block body %}
-    {# search box #}
-    <form method="GET" action="{{ url_for('user.search_user') }}">
-        <div class="input-group input-group-lg" id="user_search">
-            <input class="form-control" type="search" placeholder="Search Serve"
-                   name="query">
-            <span class="input-group-btn">
-                    <button class="btn btn-default" type="submit">Search</button>
-                </span>
-        </div>
-    </form><!-- /input-group -->
-
-    {# edit user #}
     <div id="add_user" style="overflow-x:hidden;">
         {# title #}
         <div style="width: 600px;float: left;margin-top: 15px;margin-bottom: 15px">
-            <h1 style="color: #5885D5FF;font-weight: bold;margin-left: 260px">Edit User</h1>
+            <h1 style="color: #5885D5FF;font-weight: bold;margin-left: 200px">Edit My Information</h1>
         </div>
         {# close #}
         <div style="width: 100px;float: right;">
-            <a href="{{ url_for('user.adm_user') }}" style="margin-left: 70px">
+            <a href="{{ url_for('user.sign_out') }}" style="margin-left: 70px">
                 <img src="/static/img/close.png" style="width: 30px;height: 30px">
             </a>
         </div>
         {# form #}
-        <form class="form-horizontal" method="post" action="{{ url_for('user.user_edit',user_id = user.id) }}">
+        <form class="form-horizontal" method="post" action="{{ url_for('user.personal_edit',user_id = user.id) }}">
             <div class="row" style="margin-left: 15%;margin-right: 15%;">
                 {# Email #}
                 <div class="form-group">

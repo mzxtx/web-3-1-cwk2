@@ -163,3 +163,24 @@ def add_user():
             else:
                 flash("The message format is incorrect.")
             return redirect(url_for("user.add_user"))
+
+# personal information
+@bp.route("/personal_edit/<int:user_id>", methods=['GET', 'POST'])
+def personal_edit(user_id):
+    user = UserModel.query.get(user_id)
+    if request.method == 'GET':
+        return render_template("index/personal.html", user=user)
+    else:
+        form = Edit_User_Form(request.form)
+        if form.validate():
+            user.username = form.username.data
+            user.email = form.email.data
+            user.password = form.password.data
+
+            db.session.commit()
+            # Clear all data in the session
+            session.clear()
+            return redirect(url_for("user.sign_in"))
+        else:
+            flash("The message format is incorrect.")
+            return redirect(url_for("user.personal_edit",user_id=user_id))
