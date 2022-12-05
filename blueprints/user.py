@@ -2,7 +2,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 from exts import db
 from model import UserModel, ServeModel
-from .form import Sign_up_Form, Sign_in_Form, Serve_Form
+from .form import Sign_up_Form, Sign_in_Form, Serve_Form , Add_User_Form , Edit_User_Form
 from sqlalchemy import or_
 
 bp = Blueprint("user", __name__, url_prefix="/user")
@@ -74,11 +74,6 @@ def index_user():
     return render_template("user/index-user.html")
 
 
-# Administrator Interface
-@bp.route("/adm/user")
-def adm_user():
-    return render_template("adm/adm-user.html")
-
 #user serve
 @bp.route("/serve")
 def serve():
@@ -102,4 +97,69 @@ def search_serve():
 
     return render_template("user/serve.html", serves=serves)
 
+# user table
+@bp.route("/adm/user")
+def adm_user():
+    users = UserModel.query.all()
+    return render_template("adm/adm-user.html", users=users)
 
+# user edit
+@bp.route("/adm/user_edit/<int:user_id>", methods=['GET', 'POST'])
+def user_edit(user_id):
+    user = UserModel.query.get(user_id)
+    if request.method == 'GET':
+        return render_template("adm/user_edit.html", user=user)
+    else:
+        form = Edit_User_Form(request.form)
+        if form.validate():
+            user.username = form.username.data
+            user.email = form.email.data
+            user.password = form.password.data
+
+            db.session.commit()
+            return redirect(url_for("user.adm_user"))
+        else:
+            flash("The message format is incorrect.")
+            return redirect(url_for("user.user_edit",user_id=user_id))
+
+# serve delete
+@bp.route("/user_delete/<int:user_id>")
+def user_delete(user_id):
+    UserModel.query.filter_by(id=user_id).delete()
+    db.session.commit()
+    return redirect(url_for("user.adm_user"))
+
+# search
+@bp.route("/search_user")
+def search_user():
+    query = request.args.get("query")
+    users = UserModel.query.filter(or_(UserModel.username.contains(query),
+                                              UserModel.email.contains(query),
+                                              UserModel.password.contains(query),))
+
+    return render_template("adm/adm-user.html", users=users)
+
+# add user
+@bp.route("/add_user", methods=['GET', 'POST'])
+def add_user():
+    if request.method == 'GET':
+        return render_template("adm/add_user.html")
+    else:
+        form = Add_User_Form(request.form)
+        if form.validate():
+            email = form.email.data
+            username = form.username.data
+            password = form.password.data
+
+            user = UserModel(email=email, username=username, password=password)
+            db.session.add(user)
+            db.session.commit()
+            return redirect(url_for("user.adm_user"))
+        else:
+            email = form.email.data
+            user_model = UserModel.query.filter_by(email=email).first()
+            if user_model:
+                flash("The email address has been registered.")
+            else:
+                flash("The message format is incorrect.")
+            return redirect(url_for("user.add_user"))

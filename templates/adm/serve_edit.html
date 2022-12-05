@@ -11,6 +11,7 @@
 {% endblock %}
 
 {% block body %}
+    {#adm serve nav#}
     <div id="adm_serve_nav">
         <ul class="nav nav-stacked">
             <li>
@@ -42,14 +43,17 @@
 
     {#edit serve#}
     <div id="add-serve" style="overflow-x:hidden">
+        {#title#}
         <div style="width: 600px;float: left;margin-top: 5px;margin-bottom: 10px">
             <h1 style="color: #5885D5FF;font-weight: bold;margin-left: 250px">Edit Serve</h1>
         </div>
+        {#close#}
         <div style="width: 100px;float: right;margin-left:650px;position: fixed">
             <a href="{{ url_for('serve.adm_serve') }}">
                 <img src="/static/img/close.png" style="width: 30px;height: 30px">
             </a>
         </div>
+        {#form#}
         <form class="form-horizontal" action="{{ url_for("serve.serve_edit",serve_id = serve.id) }}" method="post">
             <div class="row" style="position: relative; top: 10px;margin-left: 15%;margin-right: 15%;">
                 <div class="form-group">

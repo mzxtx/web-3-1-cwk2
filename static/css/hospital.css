@@ -84,6 +84,7 @@ li {
     left: 500px;
     width: 700px;
 }
+
 #as-title{
     color: white;
 }
@@ -125,3 +126,34 @@ li {
     white-space:nowrap;
     background-color:transparent;
     border:0}
+
+#user_scroll{
+    background-color: rgba(255, 255, 255, 0.42);
+    border-radius: 12px;
+    height: 550px;
+    width: 1200px;
+    margin-top: 170px;
+    margin-left: 170px;
+}
+
+#user_search{
+    position: fixed;
+    top: 100px;
+    left: 400px;
+    width: 700px;
+}
+
+#add-user{
+    position: fixed;
+    top: 115px;
+    left: 1150px;
+}
+
+#add_user{
+    width: 700px;
+    margin-top: 200px;
+    margin-left: 400px;
+    background-color: rgba(255, 255, 255, 0.42);
+    border-radius: 12px;
+    height: 450px;
+}

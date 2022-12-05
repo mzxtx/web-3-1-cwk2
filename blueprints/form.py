@@ -28,3 +28,22 @@ class Serve_Form(wtforms.Form):
     obj = wtforms.StringField(validators=[DataRequired()])
     price = wtforms.FloatField(validators=[DataRequired()])
     introduction = wtforms.StringField(validators=[length(min=0,max=10000)])
+
+# add user form
+class Add_User_Form(wtforms.Form):
+    username = wtforms.StringField(validators=[length(min=2, max=20)])
+    email = wtforms.StringField(validators=[email()])
+    password = wtforms.StringField(validators=[length(min=6, max=20)])
+
+    # Verify that the email address is registered.
+    def validate_email(self, field):
+        email = field.data
+        user_model = UserModel.query.filter_by(email=email).first()
+        if user_model:
+            raise wtforms.ValidationError("The email address has been registered.")
+
+# edit user form
+class Edit_User_Form(wtforms.Form):
+    username = wtforms.StringField(validators=[length(min=2, max=20)])
+    email = wtforms.StringField(validators=[email()])
+    password = wtforms.StringField(validators=[length(min=6, max=20)])
