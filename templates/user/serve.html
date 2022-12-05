@@ -2,7 +2,7 @@
 
 {% block title %}Charlie Pet Hospital - Home{% endblock %}
 {% block background %}
-    style="background-image: url(/static/background-1.jpg);background-size: 100%,100%"
+    style="background-image: url(/static/img/background-1.jpg);background-size: 100%,100%"
 {% endblock %}
 {% block nav %}
     <li><a href="{{ url_for('user.index_user') }}" id="nav">Home</a></li>
@@ -43,15 +43,15 @@
                 <th>Name</th>
                 <th onclick="sortTable('serve_adm_table',1)" style="cursor: pointer;">
                     Classification
-                    <img src="/static/sort.png" style="width: 15px;height: 15px">
+                    <img src="/static/img/sort.png" style="width: 15px;height: 15px">
                 </th>
                 <th onclick="sortTable('serve_adm_table',2)" style="cursor: pointer;">
                     Object
-                    <img src="/static/sort.png" style="width: 15px;height: 15px">
+                    <img src="/static/img/sort.png" style="width: 15px;height: 15px">
                 </th>
                 <th onclick="sortNum('serve_adm_table',3)" style="cursor: pointer;">
                     Price
-                    <img src="/static/sort.png" style="width: 15px;height: 15px">
+                    <img src="/static/img/sort.png" style="width: 15px;height: 15px">
                 </th>
                 <th>Add to Pet</th>
             </tr>
@@ -64,7 +64,7 @@
                     <td>{{ serve.classification }}</td>
                     <td>{{ serve.obj }}</td>
                     <td>{{ serve.price }}</td>
-                    <td><a href=""><img src="/static/buy.png"
+                    <td><a href=""><img src="/static/img/buy.png"
                                         style="height:18px;width: 18px;margin-left: 28px"></a>
                     </td>
                 </tr>

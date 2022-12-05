@@ -2,7 +2,7 @@
 
 {% block title %}Charlie Pet Hospital - Charlie User{% endblock %}
 {% block background %}
-    style="background-image: url(/static/background-1.jpg);background-size: 100%,100%"
+    style="background-image: url(/static/img/background-1.jpg);background-size: 100%,100%"
 {% endblock %}
 {% block nav %}
     <li><a href="{{ url_for('user.adm_user') }}" id="nav">User</a></li>
@@ -16,7 +16,7 @@
         <ul class="nav nav-stacked">
             <li>
                 <a href="{{ url_for('serve.serve_add') }}" id="adm_serve_menu">
-                    <img id="add_serve_image" src="/static/add.png">
+                    <img id="add_serve_image" src="/static/img/add.png">
                     Add Serve
                 </a>
             </li>
@@ -49,15 +49,15 @@
                 <th>Name</th>
                 <th onclick="sortTable('serve_adm_table',1)" style="cursor: pointer;">
                     Classification
-                    <img src="/static/sort.png" style="width: 15px;height: 15px">
+                    <img src="/static/img/sort.png" style="width: 15px;height: 15px">
                 </th>
                 <th onclick="sortTable('serve_adm_table',2)" style="cursor: pointer;">
                     Object
-                    <img src="/static/sort.png" style="width: 15px;height: 15px">
+                    <img src="/static/img/sort.png" style="width: 15px;height: 15px">
                 </th>
                 <th onclick="sortNum('serve_adm_table',3)" style="cursor: pointer;">
                     Price
-                    <img src="/static/sort.png" style="width: 15px;height: 15px">
+                    <img src="/static/img/sort.png" style="width: 15px;height: 15px">
                 </th>
                 <th>Edit</th>
                 <th>Delete</th>
@@ -71,12 +71,12 @@
                     <td>{{ serve.classification }}</td>
                     <td>{{ serve.obj }}</td>
                     <td>{{ serve.price }}</td>
-                    <td><a href="{{ url_for('serve.serve_edit',serve_id = serve.id) }}"><img src="/static/edit.png"
+                    <td><a href="{{ url_for('serve.serve_edit',serve_id = serve.id) }}"><img src="/static/img/edit.png"
                                                                                              style="height:18px;width: 18px;margin-left: 5px"></a>
                     </td>
                     <td><a href="{{ url_for('serve.serve_delete',serve_id = serve.id) }}"
                            onclick="return confirm('Are you sure you want to delete this item?');"><img
-                            src="/static/delete.png" style="height:18px;width: 18px;margin-left: 12px"></a>
+                            src="/static/img/delete.png" style="height:18px;width: 18px;margin-left: 12px"></a>
                     </td>
                 </tr>
             {% endfor %}

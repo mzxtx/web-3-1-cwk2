@@ -2,7 +2,7 @@
 
 {% block title %}Charlie Pet Hospital - Charlie User{% endblock %}
 {% block background %}
-    style="background-image: url(/static/background-1.jpg);background-size: 100%,100%"
+    style="background-image: url(/static/img/background-1.jpg);background-size: 100%,100%"
 {% endblock %}
 {% block nav %}
     <li><a href="{{ url_for('user.adm_user') }}" id="nav">User</a></li>
@@ -15,7 +15,7 @@
         <ul class="nav nav-stacked">
             <li>
                 <a href="{{ url_for('serve.serve_add') }}" id="adm_serve_menu">
-                    <img id="add_serve_image" src="/static/add.png">
+                    <img id="add_serve_image" src="/img/add.png">
                     Add Serve
                 </a>
             </li>
@@ -47,7 +47,7 @@
         </div>
         <div style="width: 100px;float: right;">
             <a href="{{ url_for('serve.adm_serve') }}" style="margin-left: 70px">
-                <img src="/static/close.png" style="width: 30px;height: 30px">
+                <img src="/img/close.png" style="width: 30px;height: 30px">
             </a>
         </div>
         <form class="form-horizontal" action="{{ url_for("serve.serve_add") }}" method="post">

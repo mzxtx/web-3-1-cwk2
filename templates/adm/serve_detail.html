@@ -3,7 +3,7 @@
 {% block title %}Charlie Pet Hospital - Serve Detail - {{ serve.servename }}{% endblock %}
 
 {% block background %}
-    style="background-image: url(/static/background-1.jpg);background-size: 100%,100%"
+    style="background-image: url(/static/img/background-1.jpg);background-size: 100%,100%"
 {% endblock %}
 
 {% block nav %}
@@ -18,7 +18,7 @@
         <ul class="nav nav-stacked">
             <li>
                 <a href="{{ url_for('serve.serve_add') }}" id="adm_serve_menu">
-                    <img id="add_serve_image" src="/static/add.png">
+                    <img id="add_serve_image" src="/static/img/add.png">
                     Add Serve
                 </a>
             </li>
@@ -47,7 +47,7 @@
     <div id="serve_adm_scroll" style="overflow-x:hidden;">
         <div style="text-align: right">
             <a href="{{ url_for('serve.adm_serve') }}">
-                <img src="/static/close.png" style="width: 30px;height: 30px">
+                <img src="/static/img/close.png" style="width: 30px;height: 30px">
             </a>
         </div>
         <h1 style="text-align: center">{{ serve.servename }}</h1>
