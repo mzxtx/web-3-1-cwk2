@@ -1,15 +1,98 @@
 {% extends "base.html" %}
 
-{% block title%}Charlie Pet Hospital - Charlie User{% endblock %}
+{% block title %}Charlie Pet Hospital - Charlie User{% endblock %}
 {% block background %}
-style="background-image: url(/static/img/background-1.jpg);background-size: 100%,100%"
+    style="background-image: url(/static/img/background-1.jpg);background-size: 100%,100%"
 {% endblock %}
 {% block nav %}
     <li><a href="{{ url_for('user.adm_user') }}" id="nav">User</a></li>
-    <li><a href="#" id="nav">Pet</a></li>
-    <li><a href="{{ url_for('user.adm_serve') }}" id="nav">Serve</a></li>
+    <li><a href="{{ url_for('pet.adm_pet') }}" id="nav">Pet</a></li>
+    <li><a href="{{ url_for('serve.adm_serve') }}" id="nav">Serve</a></li>
 {% endblock %}
 
 {% block body %}
+    {#adm pet nav#}
+    <div id="adm_serve_nav">
+        <ul class="nav nav-stacked">
+            <li>
+                <a href="{{ url_for('pet.pet_add') }}" id="adm_serve_menu">
+                    <img id="add_serve_image" src="/static/img/add.png">
+                    Add Pet
+                </a>
+            </li>
+            <li><a href="{{ url_for('pet.adm_pet') }}" id="adm_serve_menu">All</a></li>
+            <a style="color: white; width:250px;text-decoration: none ">—————————————————</a>
+            <li><a href="/pet/search_pet?query=Cat" id="adm_pet_menu">Cat</a></li>
+            <li><a href="/pet/search_cat?query=Male" id="adm_serve_menu">Male</a></li>
+            <li><a href="/pet/search_cat?query=Female" id="adm_serve_menu">Female</a></li>
+            <a style="color: white; width:250px;text-decoration: none ">—————————————————</a>
+            <li><a href="/pet/search_pet?query=Dog" id="adm_pet_menu">Dog</a></li>
+            <li><a href="/pet/search_dog?query=Male" id="adm_serve_menu">Male</a></li>
+            <li><a href="/pet/search_dog?query=Female" id="adm_serve_menu">Female</a></li>
+        </ul>
+    </div>
 
+    {#search box#}
+    <form method="GET" action="{{ url_for('pet.search_pet') }}">
+        <div class="input-group input-group-lg" id="adm_serve_search">
+            <input class="form-control" type="search" placeholder="Search Pet"
+                   name="query">
+            <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">Search</button>
+                </span>
+        </div>
+    </form><!-- /input-group -->
+
+    {#scroll box#}
+    <div id="serve_adm_scroll" style="overflow-x:hidden;">
+        <table class="table table-hover" id="serve_adm_table" style="width: 1160px">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th onclick="sortTable('serve_adm_table',1)" style="cursor: pointer;">
+                    Master's Email
+                    <img src="/static/img/sort.png" style="width: 15px;height: 15px">
+                </th>
+                <th onclick="sortTable('serve_adm_table',2)" style="cursor: pointer;">
+                    Species
+                    <img src="/static/img/sort.png" style="width: 15px;height: 15px">
+                </th>
+                <th onclick="sortTable('serve_adm_table',3)" style="cursor: pointer;">
+                    Breed
+                    <img src="/static/img/sort.png" style="width: 15px;height: 15px">
+                </th>
+                <th onclick="sortTable('serve_adm_table',4)" style="cursor: pointer;">
+                    Sex
+                    <img src="/static/img/sort.png" style="width: 15px;height: 15px">
+                </th>
+                <th onclick="$.sortTime.sort('serve_adm_table',5)" style="cursor: pointer;">
+                    Birthday
+                    <img src="/static/img/sort.png" style="width: 15px;height: 15px">
+                </th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for pet in pets %}
+                <tr>
+                    <td><a href="{{ url_for('pet.pet_detail',pet_id = pet.id) }}"
+                           style="color: black;text-decoration: none">{{ pet.petname }}</a></td>
+                    <td>{{ pet.user.email }}</td>
+                    <td>{{ pet.species }}</td>
+                    <td>{{ pet.breed }}</td>
+                    <td>{{ pet.sex }}</td>
+                    <td>{{ pet.birthday }}</td>
+                    <td><a href="{{ url_for('pet.pet_edit',pet_id = pet.id) }}"><img src="/static/img/edit.png"
+                                                                                     style="height:18px;width: 18px;margin-left: 5px"></a>
+                    </td>
+                    <td><a href="{{ url_for('pet.pet_delete',pet_id = pet.id) }}"
+                           onclick="return confirm('Are you sure you want to delete this item?');"><img
+                            src="/static/img/delete.png" style="height:18px;width: 18px;margin-left: 12px"></a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

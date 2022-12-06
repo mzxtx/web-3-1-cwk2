@@ -1,8 +1,8 @@
 # login interface
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 from exts import db
-from model import UserModel, ServeModel
-from .form import Sign_up_Form, Sign_in_Form, Serve_Form , Add_User_Form , Edit_User_Form
+from model import UserModel, ServeModel, PetModel
+from .form import Sign_up_Form, Sign_in_Form, Serve_Form, Add_User_Form, Edit_User_Form
 from sqlalchemy import or_
 
 bp = Blueprint("user", __name__, url_prefix="/user")
@@ -74,11 +74,12 @@ def index_user():
     return render_template("user/index-user.html")
 
 
-#user serve
+# user serve
 @bp.route("/serve")
 def serve():
     serves = ServeModel.query.all()
     return render_template("user/serve.html", serves=serves)
+
 
 # serve detail
 @bp.route("/serve/detail/<int:serve_id>")
@@ -86,22 +87,25 @@ def serve_detail(serve_id):
     serve = ServeModel.query.get(serve_id)
     return render_template("user/serve_detail.html", serve=serve)
 
+
 # search serve
 @bp.route("/search_serve")
 def search_serve():
     query = request.args.get("query")
     serves = ServeModel.query.filter(or_(ServeModel.servename.contains(query),
-                                              ServeModel.classification.contains(query),
-                                              ServeModel.obj.contains(query),
-                                              ServeModel.price.contains(query),))
+                                         ServeModel.classification.contains(query),
+                                         ServeModel.obj.contains(query),
+                                         ServeModel.price.contains(query), ))
 
     return render_template("user/serve.html", serves=serves)
+
 
 # user table
 @bp.route("/adm/user")
 def adm_user():
     users = UserModel.query.all()
     return render_template("adm/adm-user.html", users=users)
+
 
 # user edit
 @bp.route("/adm/user_edit/<int:user_id>", methods=['GET', 'POST'])
@@ -120,7 +124,8 @@ def user_edit(user_id):
             return redirect(url_for("user.adm_user"))
         else:
             flash("The message format is incorrect.")
-            return redirect(url_for("user.user_edit",user_id=user_id))
+            return redirect(url_for("user.user_edit", user_id=user_id))
+
 
 # serve delete
 @bp.route("/user_delete/<int:user_id>")
@@ -129,15 +134,17 @@ def user_delete(user_id):
     db.session.commit()
     return redirect(url_for("user.adm_user"))
 
+
 # search
 @bp.route("/search_user")
 def search_user():
     query = request.args.get("query")
     users = UserModel.query.filter(or_(UserModel.username.contains(query),
-                                              UserModel.email.contains(query),
-                                              UserModel.password.contains(query),))
+                                       UserModel.email.contains(query),
+                                       UserModel.password.contains(query), ))
 
     return render_template("adm/adm-user.html", users=users)
+
 
 # add user
 @bp.route("/add_user", methods=['GET', 'POST'])
@@ -164,6 +171,7 @@ def add_user():
                 flash("The message format is incorrect.")
             return redirect(url_for("user.add_user"))
 
+
 # personal information
 @bp.route("/personal_edit/<int:user_id>", methods=['GET', 'POST'])
 def personal_edit(user_id):
@@ -183,4 +191,4 @@ def personal_edit(user_id):
             return redirect(url_for("user.sign_in"))
         else:
             flash("The message format is incorrect.")
-            return redirect(url_for("user.personal_edit",user_id=user_id))
+            return redirect(url_for("user.personal_edit", user_id=user_id))

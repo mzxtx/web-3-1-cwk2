@@ -6,7 +6,7 @@
 {% endblock %}
 {% block nav %}
     <li><a href="{{ url_for('user.adm_user') }}" id="nav">User</a></li>
-    <li><a href="#" id="nav">Pet</a></li>
+    <li><a href="{{ url_for('pet.adm_pet') }}" id="nav">Pet</a></li>
     <li><a href="{{ url_for('serve.adm_serve') }}" id="nav">Serve</a></li>
 {% endblock %}
 
@@ -56,12 +56,14 @@
         {#form#}
         <form class="form-horizontal" action="{{ url_for("serve.serve_edit",serve_id = serve.id) }}" method="post">
             <div class="row" style="position: relative; top: 10px;margin-left: 15%;margin-right: 15%;">
+                {# servename #}
                 <div class="form-group">
                     <label for="servename">Serve Name</label>
                     <input type="text" class="form-control" id="servename"
                            placeholder="Please input the serve name"
                            name="servename" value="{{ serve.servename }}">
                 </div>
+                {# classification #}
                 <div class="form-group">
                     <label for="classification">Classification</label>
                     <select name="classification" class="form-control">
@@ -87,6 +89,7 @@
                         {% endif %}
                     </select>
                 </div>
+                {# Object #}
                 <div class="form-group">
                     <label for="obj">Object</label>
                     <div>
@@ -132,7 +135,7 @@
                         </div>
                     </div>
                 {% endfor %}
-                {#Add button#}
+                {#Edit button#}
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-block">Edit</button>
                 </div>

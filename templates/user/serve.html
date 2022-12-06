@@ -7,7 +7,7 @@
 {% block nav %}
     <li><a href="{{ url_for('user.index_user') }}" id="nav">Home</a></li>
     <li><a href="{{ url_for('user.serve') }}" id="nav">Serve</a></li>
-    <li><a href="" id="nav">Pet</a></li>
+    <li><a href="{{ url_for('pet.user_pet',user_id = user.id) }}" id="nav">Pet</a></li>
 {% endblock %}
 
 {% block body %}
@@ -15,9 +15,11 @@
     <div id="adm_serve_nav">
         <ul class="nav nav-stacked">
             <li><a href="{{ url_for('user.serve') }}" id="adm_serve_menu">All</a></li>
-            <li><a href="/user/search_serve?query=Cat" id="adm_serve_menu">Cat</a></li>
+            <a style="color: white; width:250px;text-decoration: none ">—————————————————</a>
+            <li><a href="/user/search_serve?query=Cat" id="adm_pet_menu">Cat</a></li>
             <li><a href="/user/search_serve?query=Dog" id="adm_serve_menu">Dog</a></li>
-            <li><a href="/user/search_serve?query=Vaccine" id="adm_serve_menu">Vaccine</a></li>
+            <a style="color: white; width:250px;text-decoration: none ">—————————————————</a>
+            <li><a href="/user/search_serve?query=Vaccine" id="adm_pet_menu">Vaccine</a></li>
             <li><a href="/user/search_serve?query=Operation" id="adm_serve_menu">Operation</a></li>
             <li><a href="/user/search_serve?query=Health Examination" id="adm_serve_menu">Health Examination</a></li>
             <li><a href="/user/search_serve?query=Expelling parasiting" id="adm_serve_menu">Expelling parasiting</a></li>

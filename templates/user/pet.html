@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Charlie Pet Hospital - Home{% endblock %}
+{% block background %}
+    style="background-image: url(/static/img/background-1.jpg);background-size: 100%,100%"
+{% endblock %}
+{% block nav %}
+    <li><a href="{{ url_for('user.index_user') }}" id="nav">Home</a></li>
+    <li><a href="{{ url_for('user.serve') }}" id="nav">Serve</a></li>
+    <li><a href="{{ url_for('pet.user_pet',user_id = user.id) }}" id="nav">Pet</a></li>
+{% endblock %}
+
+{% block body %}
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <ul id="pet-table">
+            {% for pet in pets %}
+                <li>
+                    <div id="pet">
+                        <p>
+                            <a href="#"
+                               style="color: black;margin-left: 280px;font-weight: bold;font-size: 30px">
+                                {{ pet.petname }}
+                            </a>
+                            <a style="color: #1438ad;font-size: 15px;text-decoration: none"> {{ pet.species }}</a>
+                            {# delete #}
+                            <a href="{{ url_for('pet.user_pet_delete',pet_id=pet.id) }}" style="margin-right: 5px;margin-top: 5px;float: right">
+                                <img style="width: 20px;height: 20px" src="/static/img/delete.png">
+                            </a>
+                            {# edit #}
+                            <a href="{{ url_for('pet.user_edit_pet',pet_id=pet.id) }}"
+                               style="margin-right: 5px;text-decoration: none;margin-top: 5px;float: right">
+                                <img style="width: 20px;height: 20px" src="/static/img/edit.png">
+                            </a>
+                        </p>
+                        <p style="text-align: center">
+                            <a style="color: black;text-decoration: none">{{ pet.sex }} | {{ pet.breed }} | {{ pet.birthday }}
+                            </a>
+                        </p>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

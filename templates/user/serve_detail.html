@@ -7,7 +7,7 @@
 {% block nav %}
     <li><a href="{{ url_for('user.index_user') }}" id="nav">Home</a></li>
     <li><a href="{{ url_for('user.serve') }}" id="nav">Serve</a></li>
-    <li><a href="" id="nav">Pet</a></li>
+    <li><a href="{{ url_for('pet.user_pet',user_id = user.id) }}" id="nav">Pet</a></li>
 {% endblock %}
 
 {% block body %}

@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block title %}Charlie Pet Hospital - Charlie User{% endblock %}
+{% block background %}
+    style="background-image: url(/static/img/background-1.jpg);background-size: 100%,100%"
+{% endblock %}
+{% block nav %}
+    <li><a href="{{ url_for('user.adm_user') }}" id="nav">User</a></li>
+    <li><a href="{{ url_for('pet.adm_pet') }}" id="nav">Pet</a></li>
+    <li><a href="{{ url_for('serve.adm_serve') }}" id="nav">Serve</a></li>
+{% endblock %}
+
+{% block body %}
+    {#adm pet nav#}
+    <div id="adm_serve_nav">
+        <ul class="nav nav-stacked">
+            <li>
+                <a href="{{ url_for('pet.pet_add') }}" id="adm_serve_menu">
+                    <img id="add_serve_image" src="/static/img/add.png">
+                    Add Pet
+                </a>
+            </li>
+            <li><a href="{{ url_for('pet.adm_pet') }}" id="adm_serve_menu">All</a></li>
+            <a style="color: white; width:250px;text-decoration: none ">—————————————————</a>
+            <li><a href="/pet/search_pet?query=Cat" id="adm_pet_menu">Cat</a></li>
+            <li><a href="/pet/search_cat?query=Male" id="adm_serve_menu">Male</a></li>
+            <li><a href="/pet/search_cat?query=Female" id="adm_serve_menu">Female</a></li>
+            <a style="color: white; width:250px;text-decoration: none ">—————————————————</a>
+            <li><a href="/pet/search_pet?query=Dog" id="adm_pet_menu">Dog</a></li>
+            <li><a href="/pet/search_dog?query=Male" id="adm_serve_menu">Male</a></li>
+            <li><a href="/pet/search_dog?query=Female" id="adm_serve_menu">Female</a></li>
+        </ul>
+    </div>
+
+    {#search box#}
+    <form method="GET" action="{{ url_for('pet.search_pet') }}">
+        <div class="input-group input-group-lg" id="adm_serve_search">
+            <input class="form-control" type="search" placeholder="Search Pet"
+                   name="query">
+            <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">Search</button>
+                </span>
+        </div>
+    </form><!-- /input-group -->
+
+    {#edit pet#}
+    <div id="add-serve" style="overflow-x:hidden;">
+        {# title #}
+        <div style="width: 600px;float: left;margin-top: 10px;margin-bottom: 10px">
+            <h1 style="color: #5885D5FF;font-weight: bold;margin-left: 280px">Edit Pet</h1>
+        </div>
+        {# close #}
+        <div style="width: 100px;float: right;">
+            <a href="{{ url_for('pet.adm_pet') }}" style="margin-left: 70px">
+                <img src="/static/img/close.png" style="width: 30px;height: 30px">
+            </a>
+        </div>
+        {# form #}
+        <form class="form-horizontal" action="{{ url_for("pet.pet_edit",pet_id = pet.id) }}" method="post">
+            <div class="row" style="margin-left: 15%;margin-right: 15%;">
+                {# pet name #}
+                <div class="form-group">
+                    <label for="petname">Pet Name</label>
+                    <input type="text" class="form-control" id="petname"
+                           placeholder="Please input the pet name"
+                           name="petname" value="{{ pet.petname }}">
+                </div>
+                {# master email #}
+                <div class="form-group">
+                    <label for="email" class="fs-1">Email</label>
+                    <input type="email" class="form-control" id="email"
+                           placeholder="Please input the email"
+                           name="email" value="{{ pet.user.email }}">
+                </div>
+                {# species #}
+                <div class="form-group">
+                    <div style="float: left;margin-top: 5px">
+                        <label for="species">Species</label>
+                    </div>
+                    <div style="float: right;margin-right: 340px">
+                        <label class="radio-inline">
+                            {% if pet.species == 'Cat' %}
+                                <input type="radio" name="species" id="species-Cat" value="Cat" checked>
+                            {% else %}
+                                <input type="radio" name="species" id="species-Cat" value="Cat">
+                            {% endif %}
+                            Cat
+                        </label>
+                        <label class="radio-inline">
+                            {% if pet.species == 'Dog' %}
+                                <input type="radio" name="species" id="species-Dog" value="Dog" checked>
+                            {% else %}
+                                <input type="radio" name="species" id="species-Dog" value="Dog">
+                            {% endif %}
+                            Dog
+                        </label>
+                    </div>
+                </div>
+                {# breed #}
+                <div class="form-group">
+                    <label for="breed">Breed</label>
+                    <input type="text" class="form-control" id="breed"
+                           placeholder="Please input the breed"
+                           name="breed" value="{{ pet.breed }}">
+                </div>
+                {# sex #}
+                <div class="form-group">
+                    <div style="float: left;margin-top: 5px">
+                        <label for="sex">Sex</label>
+                    </div>
+                    <div style="float: right;margin-right: 340px">
+                        <label class="radio-inline">
+                            {% if pet.sex == 'Male' %}
+                                <input type="radio" name="sex" id="sex-Male" value="Male" checked>
+                            {% else %}
+                                <input type="radio" name="sex" id="sex-Male" value="Male">
+                            {% endif %}
+                            Male
+                        </label>
+                        <label class="radio-inline">
+                            {% if pet.sex == 'Female' %}
+                                <input type="radio" name="sex" id="sex-Female" value="Female" checked>
+                            {% else %}
+                                <input type="radio" name="sex" id="sex-Female" value="Female">
+                            {% endif %}
+                            Female
+                        </label>
+                    </div>
+                </div>
+                {# birthday #}
+                <div class="form-group">
+                    <label for="birthday">Birthday</label>
+                    <input type="date" class="form-control" id="birthday"
+                           name="birthday" value="{{ pet.birthday }}">
+                </div>
+                {#Error message Prompt#}
+                {% for message in get_flashed_messages() %}
+                    <div class="form-group">
+                        <div class="text-danger">
+                            {{ message }}
+                        </div>
+                    </div>
+                {% endfor %}
+                {#Edit button#}
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block" style="margin-top: 5px">Edit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+{% endblock %}

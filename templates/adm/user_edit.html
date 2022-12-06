@@ -6,7 +6,7 @@
 {% endblock %}
 {% block nav %}
     <li><a href="{{ url_for('user.adm_user') }}" id="nav">User</a></li>
-    <li><a href="" id="nav">Pet</a></li>
+    <li><a href="{{ url_for('pet.adm_pet') }}" id="nav">Pet</a></li>
     <li><a href="{{ url_for('serve.adm_serve') }}" id="nav">Serve</a></li>
 {% endblock %}
 
@@ -14,7 +14,7 @@
     {# search box #}
     <form method="GET" action="{{ url_for('user.search_user') }}">
         <div class="input-group input-group-lg" id="user_search">
-            <input class="form-control" type="search" placeholder="Search Serve"
+            <input class="form-control" type="search" placeholder="Search User"
                    name="query">
             <span class="input-group-btn">
                     <button class="btn btn-default" type="submit">Search</button>

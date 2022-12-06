@@ -6,7 +6,7 @@
 {% endblock %}
 {% block nav %}
     <li><a href="{{ url_for('user.adm_user') }}" id="nav">User</a></li>
-    <li><a href="#" id="nav">Pet</a></li>
+    <li><a href="{{ url_for('pet.adm_pet') }}" id="nav">Pet</a></li>
     <li><a href="{{ url_for('serve.adm_serve') }}" id="nav">Serve</a></li>
 {% endblock %}
 

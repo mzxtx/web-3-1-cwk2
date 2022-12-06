@@ -47,3 +47,20 @@ class Edit_User_Form(wtforms.Form):
     username = wtforms.StringField(validators=[length(min=2, max=20)])
     email = wtforms.StringField(validators=[email()])
     password = wtforms.StringField(validators=[length(min=6, max=20)])
+
+# pet form
+class Pet_Form(wtforms.Form):
+    # ForeignKey
+    email = wtforms.StringField(validators=[email()])
+    petname = wtforms.StringField(validators=[length(min=2, max=20)])
+    species = wtforms.StringField(validators=[length(min=2, max=20)])
+    breed = wtforms.StringField(validators=[length(min=2, max=20)])
+    sex = wtforms.StringField(validators=[length(min=2, max=20)])
+    birthday = wtforms.DateField(validators=[DataRequired()])
+
+    # Verify that the email address is existed.
+    def validate_email(self, field):
+        email = field.data
+        user = UserModel.query.filter_by(email=email).count()
+        if user == 0:
+            raise wtforms.ValidationError("The user does not exist.")
