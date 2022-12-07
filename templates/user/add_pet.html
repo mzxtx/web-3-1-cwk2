@@ -11,11 +11,11 @@ style="background-image: url(/static/img/background-1.jpg);background-size: 100%
 {% endblock %}
 
 {% block body %}
-    {#edit pet#}
+    {#add pet#}
     <div id="edit-pet" style="overflow-x:hidden;">
         {# title #}
         <div style="width: 600px;float: left;margin-top: 10px;margin-bottom: 10px">
-            <h1 style="color: #5885D5FF;font-weight: bold;margin-left: 280px">Edit Pet</h1>
+            <h1 style="color: #5885D5FF;font-weight: bold;margin-left: 280px">Add Pet</h1>
         </div>
         {# close #}
         <div style="width: 100px;float: right;">
@@ -24,21 +24,21 @@ style="background-image: url(/static/img/background-1.jpg);background-size: 100%
             </a>
         </div>
         {# form #}
-        <form class="form-horizontal" action="{{ url_for("pet.user_edit_pet",pet_id = pet.id,user_id = pet.user.id) }}" method="post">
+        <form class="form-horizontal" action="{{ url_for("pet.user_add_pet",user_id = user.id) }}" method="post">
             <div class="row" style="margin-left: 15%;margin-right: 15%;">
                 {# pet name #}
                 <div class="form-group">
                     <label for="petname">Pet Name</label>
                     <input type="text" class="form-control" id="petname"
                            placeholder="Please input the pet name"
-                           name="petname" value="{{ pet.petname }}">
+                           name="petname">
                 </div>
                 {# master email #}
                 <div class="form-group">
                     <label for="email" class="fs-1">Email</label>
                     <input type="email" class="form-control" id="email"
                            placeholder="Please input the email"
-                           name="email" style="pointer-events: none" value="{{ pet.user.email }}">
+                           name="email" style="pointer-events: none" value="{{ user.email }}">
                 </div>
                 {# species #}
                 <div class="form-group">
@@ -47,20 +47,10 @@ style="background-image: url(/static/img/background-1.jpg);background-size: 100%
                     </div>
                     <div style="float: right;margin-right: 340px">
                         <label class="radio-inline">
-                            {% if pet.species == 'Cat' %}
-                                <input type="radio" name="species" id="species-Cat" value="Cat" checked>
-                            {% else %}
-                                <input type="radio" name="species" id="species-Cat" value="Cat">
-                            {% endif %}
-                            Cat
+                            <input type="radio" name="species" id="species-Cat" value="Cat">Cat
                         </label>
                         <label class="radio-inline">
-                            {% if pet.species == 'Dog' %}
-                                <input type="radio" name="species" id="species-Dog" value="Dog" checked>
-                            {% else %}
-                                <input type="radio" name="species" id="species-Dog" value="Dog">
-                            {% endif %}
-                            Dog
+                                <input type="radio" name="species" id="species-Dog" value="Dog">Dog
                         </label>
                     </div>
                 </div>
@@ -69,7 +59,7 @@ style="background-image: url(/static/img/background-1.jpg);background-size: 100%
                     <label for="breed">Breed</label>
                     <input type="text" class="form-control" id="breed"
                            placeholder="Please input the breed"
-                           name="breed" value="{{ pet.breed }}">
+                           name="breed">
                 </div>
                 {# sex #}
                 <div class="form-group">
@@ -78,20 +68,10 @@ style="background-image: url(/static/img/background-1.jpg);background-size: 100%
                     </div>
                     <div style="float: right;margin-right: 340px">
                         <label class="radio-inline">
-                            {% if pet.sex == 'Male' %}
-                                <input type="radio" name="sex" id="sex-Male" value="Male" checked>
-                            {% else %}
-                                <input type="radio" name="sex" id="sex-Male" value="Male">
-                            {% endif %}
-                            Male
+                            <input type="radio" name="sex" id="sex-Male" value="Male">Male
                         </label>
                         <label class="radio-inline">
-                            {% if pet.sex == 'Female' %}
-                                <input type="radio" name="sex" id="sex-Female" value="Female" checked>
-                            {% else %}
-                                <input type="radio" name="sex" id="sex-Female" value="Female">
-                            {% endif %}
-                            Female
+                            <input type="radio" name="sex" id="sex-Female" value="Female">Female
                         </label>
                     </div>
                 </div>
@@ -99,7 +79,7 @@ style="background-image: url(/static/img/background-1.jpg);background-size: 100%
                 <div class="form-group">
                     <label for="birthday">Birthday</label>
                     <input type="date" class="form-control" id="birthday"
-                           name="birthday" value="{{ pet.birthday }}">
+                           name="birthday">
                 </div>
                 {#Error message Prompt#}
                 {% for message in get_flashed_messages() %}
@@ -111,7 +91,7 @@ style="background-image: url(/static/img/background-1.jpg);background-size: 100%
                 {% endfor %}
                 {#Edit button#}
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block" style="margin-top: 5px">Edit</button>
+                    <button type="submit" class="btn btn-primary btn-block" style="margin-top: 5px">Add</button>
                 </div>
             </div>
         </form>

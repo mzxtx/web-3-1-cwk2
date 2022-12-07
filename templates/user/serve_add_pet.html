@@ -37,17 +37,51 @@
         </div>
     </form><!-- /input-group -->
 
-    {#serve detail scroll#}
-    <div id="serve_adm_scroll" style="overflow-x:hidden;">
-        <div style="text-align: right">
-            <a href="{{ url_for('user.serve') }}">
+    {#serve add pet#}
+    <div id="add-serve-to-pet" style="overflow-x:hidden;">
+        {# title #}
+        <div style="width: 600px;float: left;margin-top: 10px;margin-bottom: 10px">
+            <h1 style="color: #5885D5FF;font-weight: bold;margin-left: 200px">Add Serve to Pet</h1>
+        </div>
+        {# close #}
+        <div style="width: 100px;float: right;">
+            <a href="{{ url_for('user.serve') }}" style="margin-left: 70px">
                 <img src="/static/img/close.png" style="width: 30px;height: 30px">
             </a>
         </div>
-        <h1 style="text-align: center">{{ serve.servename }}</h1>
-        <p style="text-align: center">￥{{ serve.price }} | {{ serve.classification }} | {{ serve.obj }}</p>
-        <div style="width: 80%;margin-left: 150px;margin-top: 20px;white-space: pre-line">
-            <p>{{ serve.introduction }}</p>
-        </div>
+        {# form #}
+        <form class="form-horizontal" action="{{ url_for("pet.user_serve_add_pet",serve_id = serve.id) }}" method="post">
+            <div class="row" style="margin-left: 15%;margin-right: 15%;">
+                {# serve name #}
+                <div class="form-group">
+                    <label for="servename">Serve Name</label>
+                    <input type="text" class="form-control" id="servename" style="pointer-events: none"
+                           placeholder="Please input the serve name"
+                           name="servename" value="{{ serve.servename }}">
+                </div>
+                {# pet name #}
+                <div class="form-group">
+                    <label for="petname">Pet Name</label>
+                    <select name="petname" class="form-control">
+                        {% for pet in user.pets %}
+                        <option value="{{ pet.petname }}">{{ pet.petname }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {#Error message Prompt#}
+                {% for message in get_flashed_messages() %}
+                    <div class="form-group">
+                        <div class="text-danger">
+                            {{ message }}
+                        </div>
+                    </div>
+                {% endfor %}
+                {#Edit button#}
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block" style="margin-top: 5px">Add</button>
+                </div>
+            </div>
+        </form>
     </div>
+
 {% endblock %}

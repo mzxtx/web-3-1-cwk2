@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Charlie Pet Hospital - Charlie User{% endblock %}
+{% block background %}
+    style="background-image: url(/static/img/background-1.jpg);background-size: 100%,100%"
+{% endblock %}
+{% block nav %}
+    <li><a href="{{ url_for('user.adm_user') }}" id="nav">User</a></li>
+    <li><a href="{{ url_for('pet.adm_pet') }}" id="nav">Pet</a></li>
+    <li><a href="{{ url_for('serve.adm_serve') }}" id="nav">Serve</a></li>
+{% endblock %}
+
+{% block body %}
+    {#search box#}
+    <form method="GET" action="{{ url_for('user.search_user') }}">
+        <div class="input-group input-group-lg" id="user_search">
+            <input class="form-control" type="search" placeholder="Search User"
+                   name="query">
+            <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">Search</button>
+                </span>
+        </div>
+    </form><!-- /input-group -->
+
+    {#user detail#}
+    <div id="serve_adm_scroll" style="overflow-x:hidden;">
+        <p style="text-align: center">
+            <a style="text-align: center;color: black;font-size: 30px;font-weight: bold">{{ user.username }}</a>
+            <a href="{{ url_for('user.adm_user') }}" style="float: right">
+                <img src="/static/img/close.png" style="width: 30px;height: 30px">
+            </a>
+        </p>
+        <p style="text-align: center">Email: {{ user.email }} | Password: {{ user.password }} | Join Time: {{ user.join_time }}</p>
+        {% for pet in pets %}
+            <p style="text-align: center;font-size: 20px">
+                <a href="{{ url_for('pet.pet_detail',pet_id = pet.id) }}" style="color: black">
+                    {{ pet.petname }}
+                </a>
+                <a style="color: black;text-decoration: none">
+                    | {{ pet.species }} | {{ pet.sex }} | {{ pet.breed }}
+                </a>
+                <a style="color: black;text-decoration: none;margin-top: 20px;margin-left: 25px">
+                    {{ pet.birthday }}
+                </a>
+            </p>
+        {% endfor %}
+    </div>
+{% endblock %}

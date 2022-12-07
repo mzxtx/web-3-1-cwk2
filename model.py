@@ -20,6 +20,8 @@ class ServeModel(db.Model):
     obj = db.Column(db.String(200), nullable=False, unique=False)
     price = db.Column(db.Float,nullable=False,unique=False)
     introduction = db.Column(db.String(1000),nullable=True,unique=False)
+    # relationship
+    panss = db.relationship("PASModel", backref="serve")
 
 class PetModel(db.Model):
     __tablename__ = "pet"
@@ -31,17 +33,16 @@ class PetModel(db.Model):
     breed = db.Column(db.String(200), nullable=False, unique=False)
     sex = db.Column(db.String(200), nullable=False, unique=False)
     birthday = db.Column(db.Date,nullable=False)
+    # relationship
+    panss = db.relationship("PASModel", backref = "pet")
 
-#
-# class PASModel(db.Model):
-#     __tablename__ = "pas"
-#     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-#     # ForeignKey
-#     petid = db.Column(db.Integer, db.ForeignKey("pet.id"))
-#     serveid = db.Column(db.Integer, db.ForeignKey("serve.id"))
-#     date = db.Column(db.DateTime, default=datetime.now)
-#
-#     # relationship
-#     pet = db.relationship("PetModel", backref = "pet")
-#     serve = db.relationship("ServeModel", backref="serve")
+
+class PASModel(db.Model):
+    __tablename__ = "pas"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    # ForeignKey
+    petid = db.Column(db.Integer, db.ForeignKey("pet.id"))
+    serveid = db.Column(db.Integer, db.ForeignKey("serve.id"))
+    date = db.Column(db.DateTime, default=datetime.now)
+
 

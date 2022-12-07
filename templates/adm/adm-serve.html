@@ -59,6 +59,7 @@
                     Price
                     <img src="/static/img/sort.png" style="width: 15px;height: 15px">
                 </th>
+                <th>Add to Pet</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
@@ -71,12 +72,19 @@
                     <td>{{ serve.classification }}</td>
                     <td>{{ serve.obj }}</td>
                     <td>{{ serve.price }}</td>
+                    <td>
+                        <a href="{{ url_for('pet.serve_add_pet',serve_id=serve.id) }}">
+                            <img src="/static/img/buy.png" style="height:18px;width: 18px;margin-left: 28px">
+                        </a>
+                    </td>
                     <td><a href="{{ url_for('serve.serve_edit',serve_id = serve.id) }}"><img src="/static/img/edit.png"
                                                                                              style="height:18px;width: 18px;margin-left: 5px"></a>
                     </td>
-                    <td><a href="{{ url_for('serve.serve_delete',serve_id = serve.id) }}"
-                           onclick="return confirm('Are you sure you want to delete this item?');"><img
-                            src="/static/img/delete.png" style="height:18px;width: 18px;margin-left: 12px"></a>
+                    <td>
+                        <a href="{{ url_for('serve.serve_delete',serve_id = serve.id) }}"
+                           onclick="return confirm('Are you sure you want to delete this item?');">
+                            <img src="/static/img/delete.png" style="height:18px;width: 18px;margin-left: 12px">
+                        </a>
                     </td>
                 </tr>
             {% endfor %}

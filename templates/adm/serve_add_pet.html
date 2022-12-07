@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}Charlie Pet Hospital - Serve Edit - {{ serve.servename }}{% endblock %}
+{% block background %}
+    style="background-image: url(/static/img/background-1.jpg);background-size: 100%,100%"
+{% endblock %}
+{% block nav %}
+    <li><a href="{{ url_for('user.adm_user') }}" id="nav">User</a></li>
+    <li><a href="{{ url_for('pet.adm_pet') }}" id="nav">Pet</a></li>
+    <li><a href="{{ url_for('serve.adm_serve') }}" id="nav">Serve</a></li>
+{% endblock %}
+
+{% block body %}
+    {#adm serve nav#}
+    <div id="adm_serve_nav">
+        <ul class="nav nav-stacked">
+            <li>
+                <a href="{{ url_for('serve.serve_add') }}" id="adm_serve_menu">
+                    <img id="add_serve_image" src="/static/img/add.png">
+                    Add Serve
+                </a>
+            </li>
+            <li><a href="{{ url_for('serve.adm_serve') }}" id="adm_serve_menu">All</a></li>
+            <li><a href="/serve/search_adm?query=Cat" id="adm_serve_menu">Cat</a></li>
+            <li><a href="/serve/search_adm?query=Dog" id="adm_serve_menu">Dog</a></li>
+            <li><a href="/serve/search_adm?query=Vaccine" id="adm_serve_menu">Vaccine</a></li>
+            <li><a href="/serve/search_adm?query=Operation" id="adm_serve_menu">Operation</a></li>
+            <li><a href="/serve/search_adm?query=Health Examination" id="adm_serve_menu">Health Examination</a></li>
+            <li><a href="/serve/search_adm?query=Expelling parasiting" id="adm_serve_menu">Expelling parasiting</a></li>
+        </ul>
+    </div>
+
+    {#search box#}
+    <form method="GET" action="{{ url_for('serve.search_adm') }}">
+        <div class="input-group input-group-lg" id="adm_serve_search">
+            <input class="form-control" type="search" placeholder="Search Serve"
+                   name="query">
+            <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">Search</button>
+                </span>
+        </div>
+    </form><!-- /input-group -->
+
+    {#serve add pet#}
+    <div id="add-serve-to-pet" style="overflow-x:hidden;">
+        {# title #}
+        <div style="width: 600px;float: left;margin-top: 10px;margin-bottom: 10px">
+            <h1 style="color: #5885D5FF;font-weight: bold;margin-left: 200px">Add Serve to Pet</h1>
+        </div>
+        {# close #}
+        <div style="width: 100px;float: right;">
+            <a href="{{ url_for('serve.adm_serve') }}" style="margin-left: 70px">
+                <img src="/static/img/close.png" style="width: 30px;height: 30px">
+            </a>
+        </div>
+        {# form #}
+        <form class="form-horizontal" action="{{ url_for("pet.serve_add_pet",serve_id = serve.id) }}" method="post">
+            <div class="row" style="margin-left: 15%;margin-right: 15%;">
+                {# serve name #}
+                <div class="form-group">
+                    <label for="servename">Serve Name</label>
+                    <input type="text" class="form-control" id="servename" style="pointer-events: none"
+                           placeholder="Please input the serve name"
+                           name="servename" value="{{ serve.servename }}">
+                </div>
+                {# pet name #}
+                <div class="form-group">
+                    <label for="petname">Pet Name</label>
+                    <input type="text" class="form-control" id="petname"
+                           placeholder="Please input the pet name"
+                           name="petname">
+                </div>
+                {#Error message Prompt#}
+                {% for message in get_flashed_messages() %}
+                    <div class="form-group">
+                        <div class="text-danger">
+                            {{ message }}
+                        </div>
+                    </div>
+                {% endfor %}
+                {#Edit button#}
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block" style="margin-top: 5px">Add</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

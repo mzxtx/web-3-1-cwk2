@@ -177,3 +177,30 @@ li {
     border-radius: 12px;
     margin-top: 10px;
 }
+
+#edit-pet{
+    width: 700px;
+    margin-top: 140px;
+    margin-left: 450px;
+    background-color: rgba(255, 255, 255, 0.42);
+    border-radius: 12px;
+    height: 575px;
+}
+
+#add-serve-to-pet{
+    width: 700px;
+    margin-top: 230px;
+    margin-left: 500px;
+    background-color: rgba(255, 255, 255, 0.42);
+    border-radius: 12px;
+    height: 350px;
+}
+
+#serve_pet_scroll{
+    background-color: rgba(255, 255, 255, 0.42);
+    border-radius: 12px;
+    height: 600px;
+    width: 1200px;
+    margin-top: 130px;
+    margin-left: 200px;
+}

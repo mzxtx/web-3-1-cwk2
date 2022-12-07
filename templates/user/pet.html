@@ -12,34 +12,57 @@
 
 {% block body %}
     <div class="col-md-3"></div>
+    {# my pet #}
     <div class="col-md-6">
         <ul id="pet-table">
             {% for pet in pets %}
                 <li>
                     <div id="pet">
-                        <p>
-                            <a href="#"
-                               style="color: black;margin-left: 280px;font-weight: bold;font-size: 30px">
+                        <p style="text-align: center">
+                            <a href="{{ url_for('pet.user_pet_detail',pet_id = pet.id) }}"
+                               style="color: black;font-weight: bold;font-size: 30px">
                                 {{ pet.petname }}
                             </a>
                             <a style="color: #1438ad;font-size: 15px;text-decoration: none"> {{ pet.species }}</a>
                             {# delete #}
-                            <a href="{{ url_for('pet.user_pet_delete',pet_id=pet.id) }}" style="margin-right: 5px;margin-top: 5px;float: right">
+                            <a href="{{ url_for('pet.user_pet_delete',pet_id=pet.id,user_id=pet.user.id) }}"
+                               style="margin-right: 5px;margin-top: 5px;float: right"
+                               onclick="return confirm('Are you sure you want to delete this item?');">
                                 <img style="width: 20px;height: 20px" src="/static/img/delete.png">
                             </a>
                             {# edit #}
-                            <a href="{{ url_for('pet.user_edit_pet',pet_id=pet.id) }}"
+                            <a href="{{ url_for('pet.user_edit_pet',pet_id=pet.id,user_id=pet.user.id) }}"
                                style="margin-right: 5px;text-decoration: none;margin-top: 5px;float: right">
                                 <img style="width: 20px;height: 20px" src="/static/img/edit.png">
                             </a>
                         </p>
                         <p style="text-align: center">
-                            <a style="color: black;text-decoration: none">{{ pet.sex }} | {{ pet.breed }} | {{ pet.birthday }}
+                            <a style="color: black;text-decoration: none">{{ pet.sex }} | {{ pet.breed }}
+                                | {{ pet.birthday }}
                             </a>
                         </p>
+                        {% for pans in pet.panss %}
+                            <p style="text-align: center;font-size: 15px">
+                                <a style="color: black;text-decoration: none">
+                                   {{ pans.serve.servename }} | {{ pans.serve.classification }} | {{ pans.serve.obj }} |
+                                    ￥{{ pans.serve.price }}
+                                </a>
+                                <a style="color: black;text-decoration: none;margin-top: 20px;margin-left: 25px">
+                                    {{ pans.date }}
+                                </a>
+                            </p>
+                        {% endfor %}
                     </div>
                 </li>
             {% endfor %}
         </ul>
+    </div>
+    <div class="col-md-3">
+        <div style="margin-top: 120px">
+            <a href="{{ url_for('pet.user_add_pet',user_id = user.id) }}" style="color: black;font-size: 30px">
+                <img src="/static/img/add-black.png" style="width: 30px;height: 30px">
+                Add New Pet
+            </a>
+        </div>
     </div>
 {% endblock %}

@@ -1,7 +1,7 @@
 # login interface
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 from exts import db
-from model import UserModel, ServeModel, PetModel
+from model import UserModel, ServeModel, PetModel, PASModel
 from .form import Sign_up_Form, Sign_in_Form, Serve_Form, Add_User_Form, Edit_User_Form
 from sqlalchemy import or_
 
@@ -192,3 +192,10 @@ def personal_edit(user_id):
         else:
             flash("The message format is incorrect.")
             return redirect(url_for("user.personal_edit", user_id=user_id))
+
+# user detail
+@bp.route("/adm/user_detail/<int:user_id>")
+def user_detail(user_id):
+    user = UserModel.query.get(user_id)
+    pets = PetModel.query.filter_by(masterid=user_id)
+    return render_template("adm/user_detail.html", user=user, pets=pets)

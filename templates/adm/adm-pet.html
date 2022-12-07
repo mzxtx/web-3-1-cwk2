@@ -69,6 +69,7 @@
                     Birthday
                     <img src="/static/img/sort.png" style="width: 15px;height: 15px">
                 </th>
+                <th>Add Serve</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
@@ -83,6 +84,11 @@
                     <td>{{ pet.breed }}</td>
                     <td>{{ pet.sex }}</td>
                     <td>{{ pet.birthday }}</td>
+                    <td>
+                        <a href="{{ url_for('pet.pet_add_serve',pet_id = pet.id) }}">
+                            <img src="/static/img/buy.png" style="height:18px;width: 18px;margin-left: 28px">
+                        </a>
+                    </td>
                     <td><a href="{{ url_for('pet.pet_edit',pet_id = pet.id) }}"><img src="/static/img/edit.png"
                                                                                      style="height:18px;width: 18px;margin-left: 5px"></a>
                     </td>

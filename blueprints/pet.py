@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 from exts import db
-from model import UserModel, ServeModel, PetModel
-from .form import Sign_up_Form, Sign_in_Form, Serve_Form, Pet_Form
+from model import UserModel, ServeModel, PetModel, PASModel
+from .form import Sign_up_Form, Sign_in_Form, Serve_Form, Pet_Form, PAS_Form
 from sqlalchemy import or_, and_
 
 bp = Blueprint("pet", __name__, url_prefix="/pet")
@@ -45,7 +45,8 @@ def pet_add():
 @bp.route("/pet_detial/<int:pet_id>")
 def pet_detail(pet_id):
     pet = PetModel.query.get(pet_id)
-    return render_template("adm/pet_detail.html", pet=pet)
+    panss = PASModel.query.filter_by(petid = pet_id)
+    return render_template("adm/pet_detail.html", pet=pet,panss=panss)
 
 
 # pet edit
@@ -115,8 +116,8 @@ def user_pet(user_id):
     return render_template("user/pet.html", pets=pets)
 
 # user edit pet
-@bp.route("/user_edit_pet/<int:pet_id>", methods=['GET', 'POST'])
-def user_edit_pet(pet_id):
+@bp.route("/<int:user_id>/user_edit_pet/<int:pet_id>", methods=['GET', 'POST'])
+def user_edit_pet(pet_id,user_id):
     pet = PetModel.query.get(pet_id)
     if request.method == 'GET':
         return render_template("user/pet_edit.html", pet=pet)
@@ -133,14 +134,130 @@ def user_edit_pet(pet_id):
             pet.masterid = master.id
 
             db.session.commit()
-            return redirect(url_for("pet.user_pet"))
+            return redirect(url_for("pet.user_pet",user_id = user_id))
         else:
             flash("The message format is incorrect.")
             return redirect(url_for("pet.user_edit_pet", pet_id=pet_id))
 
 # user pet delete
-@bp.route("/user_pet_delete/<int:pet_id>")
-def user_pet_delete(pet_id):
+@bp.route("/<int:user_id>/user_pet_delete/<int:pet_id>")
+def user_pet_delete(pet_id,user_id):
     PetModel.query.filter_by(id=pet_id).delete()
     db.session.commit()
-    return redirect(url_for("pet.user_pet"))
+    return redirect(url_for("pet.user_pet",user_id = user_id))
+
+# user add pet
+@bp.route("/<int:user_id>/user_add_pet", methods=['GET', 'POST'])
+def user_add_pet(user_id):
+    if request.method == 'GET':
+        return render_template("user/add_pet.html")
+    else:
+        form = Pet_Form(request.form)
+        if form.validate():
+            masterid = user_id
+            petname = form.petname.data
+            species = form.species.data
+            breed = form.breed.data
+            sex = form.sex.data
+            birthday = form.birthday.data
+
+            pet = PetModel(masterid=masterid, petname=petname, species=species, breed=breed,
+                           sex=sex, birthday=birthday)
+            db.session.add(pet)
+            db.session.commit()
+            return redirect(url_for("pet.user_pet",user_id = user_id))
+        else:
+            flash("The message format is incorrect.")
+            return redirect(url_for("pet.user_add_pet",user_id = user_id))
+
+# pet add serve
+@bp.route("/pet_add_serve/<int:pet_id>",methods=['GET', 'POST'])
+def pet_add_serve(pet_id):
+    pet = PetModel.query.get(pet_id)
+    if request.method == 'GET':
+        return render_template("adm/pet_add_serve.html", pet=pet)
+    else:
+        form = PAS_Form(request.form)
+        if form.validate():
+            pet.petname = form.petname.data
+            servename = form.servename.data
+            serve = ServeModel.query.filter_by(servename=servename).first()
+            serveid = serve.id
+            petid = pet_id
+
+            pas = PASModel(petid=petid, serveid=serveid)
+            db.session.add(pas)
+            db.session.commit()
+            return redirect(url_for("pet.pet_detail",pet_id = pet_id))
+        else:
+            flash("The message format is incorrect.")
+            return redirect(url_for("pet.pet_add_serve",pet_id=pet_id))
+
+# pet add serve
+@bp.route("/serve_add_pet/<int:serve_id>",methods=['GET', 'POST'])
+def serve_add_pet(serve_id):
+    serve = ServeModel.query.get(serve_id)
+    if request.method == 'GET':
+        return render_template("adm/serve_add_pet.html", serve=serve)
+    else:
+        form = PAS_Form(request.form)
+        if form.validate():
+            serve.servename = form.servename.data
+            petname = form.petname.data
+            pet = PetModel.query.filter_by(petname=petname).first()
+            serveid = serve_id
+            petid = pet.id
+
+            pas = PASModel(petid=petid, serveid=serveid)
+            db.session.add(pas)
+            db.session.commit()
+            return redirect(url_for("pet.pet_detail",pet_id = pet.id))
+        else:
+            flash("The message format is incorrect.")
+            return redirect(url_for("pet.pet_add_serve",serve_id=serve_id))
+
+# pet serve delete
+@bp.route("/pas_delete/<int:pas_id>")
+def pas_delete(pas_id):
+    pas = PASModel.query.filter_by(id=pas_id).first()
+    PASModel.query.filter_by(id=pas_id).delete()
+    db.session.commit()
+    return redirect(url_for("pet.pet_detail",pet_id = pas.petid))
+
+# user - pet add serve
+@bp.route("/user_serve_add_pet/<int:serve_id>",methods=['GET', 'POST'])
+def user_serve_add_pet(serve_id):
+    serve = ServeModel.query.get(serve_id)
+    if request.method == 'GET':
+        return render_template("user/serve_add_pet.html", serve=serve)
+    else:
+        form = PAS_Form(request.form)
+        if form.validate():
+            serve.servename = form.servename.data
+            petname = form.petname.data
+            pet = PetModel.query.filter_by(petname=petname).first()
+            serveid = serve_id
+            petid = pet.id
+
+            pas = PASModel(petid=petid, serveid=serveid)
+            db.session.add(pas)
+            db.session.commit()
+            return redirect(url_for("pet.user_pet_detail",pet_id = pas.petid))
+        else:
+            flash("The message format is incorrect.")
+            return redirect(url_for("pet.user_serve_add_pet",serve_id=serve_id))
+
+# user - pet detail
+@bp.route("/user_pet_detial/<int:pet_id>")
+def user_pet_detail(pet_id):
+    pet = PetModel.query.get(pet_id)
+    panss = PASModel.query.filter_by(petid = pet_id)
+    return render_template("user/pet_detail.html", pet=pet,panss=panss)
+
+# user-pet serve delete
+@bp.route("/user_pas_delete/<int:pas_id>")
+def user_pas_delete(pas_id):
+    pas = PASModel.query.filter_by(id=pas_id).first()
+    PASModel.query.filter_by(id=pas_id).delete()
+    db.session.commit()
+    return redirect(url_for("pet.user_pet_detail",pet_id = pas.petid))

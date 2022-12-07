@@ -1,6 +1,6 @@
 import  wtforms
 from wtforms.validators import length,email,EqualTo,DataRequired
-from model import UserModel,ServeModel
+from model import UserModel,ServeModel,PetModel
 
 #Sign in Form
 class Sign_in_Form(wtforms.Form):
@@ -50,7 +50,6 @@ class Edit_User_Form(wtforms.Form):
 
 # pet form
 class Pet_Form(wtforms.Form):
-    # ForeignKey
     email = wtforms.StringField(validators=[email()])
     petname = wtforms.StringField(validators=[length(min=2, max=20)])
     species = wtforms.StringField(validators=[length(min=2, max=20)])
@@ -64,3 +63,18 @@ class Pet_Form(wtforms.Form):
         user = UserModel.query.filter_by(email=email).count()
         if user == 0:
             raise wtforms.ValidationError("The user does not exist.")
+
+#pas form
+class PAS_Form(wtforms.Form):
+    petname = wtforms.StringField(validators=[DataRequired()])
+    servename = wtforms.StringField(validators=[DataRequired()])
+    def validate_servename(self,field):
+        servename = field.data
+        serve = ServeModel.query.filter_by(servename=servename).count()
+        if serve == 0:
+            raise wtforms.ValidationError("The serve does not exist.")
+    def validate_petname(self, field):
+        petname = field.data
+        pet = PetModel.query.filter_by(petname=petname).count()
+        if pet == 0:
+            raise wtforms.ValidationError("The pet does not exist.")
