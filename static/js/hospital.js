@@ -135,3 +135,14 @@ function sortNum(tablename,n) {
         }
     });
 })(jQuery);
+
+function check() {
+        var password = $("#password").val();
+        var len = password.length;
+        if (len<6 || len>20){
+            alert("The password must contain 6 to 20 characters.");
+            return false
+        } else {
+            return true
+        }
+    }

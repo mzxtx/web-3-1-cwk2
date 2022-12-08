@@ -20,7 +20,7 @@ style="background-image: url(/static/img/background-1.jpg);background-size: 100%
                 <div id="in-title" class="text-center">
                     <h1>Sign In</h1>
                 </div>
-                <form class="form-horizontal" action="{{ url_for("user.sign_in") }}" method="post">
+                <form class="form-horizontal" onsubmit="return check()" action="{{ url_for("user.sign_in") }}" method="post">
                     <div class="row" id="in-text">
                         <div class="form-group">
                             <label for="email" class="fs-1">Email</label>
