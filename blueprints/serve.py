@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
-from exts import db
+from exts import db,app
 from model import UserModel, ServeModel
 from .form import Sign_up_Form, Sign_in_Form, Serve_Form
 from sqlalchemy import or_

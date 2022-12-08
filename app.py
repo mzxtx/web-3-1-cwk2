@@ -1,13 +1,13 @@
 from flask import Flask,session,g
 import config
-from exts import db
+from exts import db,app
 from blueprints import index_bp,user_bp,serve_bp,pet_bp
 from flask_migrate import Migrate
 from model import UserModel
-import os
+import os,logging
 
 
-app = Flask(__name__)
+# app = Flask(__name__)
 # Bind database configuration
 app.config.from_object(config)
 db.init_app(app)
@@ -45,4 +45,13 @@ app.config['SECRET_KEY'] = os.urandom(24)
 
 
 if __name__ == '__main__':
+    # logging
+    app.debug = True
+    handler = logging.FileHandler('flask.log', encoding='UTF-8')
+    handler.setLevel(logging.DEBUG)  # 设置日志记录最低级别为DEBUG，低于DEBUG级别的日志记录会被忽略，不设置setLevel()则默认为NOTSET级别。
+    logging_format = logging.Formatter(
+        '%(asctime)s - %(levelname)s - %(filename)s - %(funcName)s - %(lineno)s - %(message)s')
+    handler.setFormatter(logging_format)
+    app.logger.addHandler(handler)
+    # run
     app.run()
