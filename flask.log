@@ -1,3 +1,4 @@
-[2022-12-08 13:50:04,855] WARNING in user: The email address and password do not match, sign in failed.
-[2022-12-08 13:50:06,751] INFO in user: qw@qwe.com sign in successfully.
-[2022-12-08 13:54:54,560] INFO in user: qw@qwe.com sign in successfully.
+2022-12-09 08:35:05,553 - INFO - user.py - sign_in - 29 - qw@qwe.com sign in successfully.
+2022-12-09 08:58:56,252 - INFO - user.py - sign_in - 25 - Charlie@adm.com sign in successfully.
+2022-12-09 08:59:37,297 - INFO - pet.py - pet_add_serve - 206 - Add serve: Triple Vaccine for Cats - Fel-O-Vax for pet: Egg Tart successfully.
+2022-12-09 09:00:07,748 - INFO - user.py - user_edit - 131 - Edit qwe@qwe.com information successfully.

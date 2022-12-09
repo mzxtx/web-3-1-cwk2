@@ -1,7 +1,8 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from exts import db
 from model import UserModel, ServeModel, PetModel, PASModel
-from .form import Sign_up_Form, Sign_in_Form, Serve_Form, Pet_Form, PAS_Form
+from .form import Pet_Form, PAS_Form
+from config import logger
 from sqlalchemy import or_, and_
 
 bp = Blueprint("pet", __name__, url_prefix="/pet")
@@ -35,9 +36,11 @@ def pet_add():
                            sex=sex, birthday=birthday)
             db.session.add(pet)
             db.session.commit()
+            logger.info(f'Add pet: {petname} for {masteremail} successfully.')
             return redirect(url_for("pet.adm_pet"))
         else:
             flash("The message format is incorrect.")
+            logger.warning(f'The message format is incorrect, add pet failed.')
             return redirect(url_for("pet.pet_add"))
 
 
@@ -68,17 +71,21 @@ def pet_edit(pet_id):
             pet.masterid = master.id
 
             db.session.commit()
+            logger.info(f'Edit pet: {pet.petname} for {masteremail} successfully.')
             return redirect(url_for("pet.adm_pet"))
         else:
             flash("The message format is incorrect.")
+            logger.warning(f'The message format is incorrect, edit pet: {pet.petname} failed.')
             return redirect(url_for("pet.pet_edit", pet_id=pet_id))
 
 
 # pet delete
 @bp.route("/pet_delete/<int:pet_id>")
 def pet_delete(pet_id):
+    pet = PetModel.query.filter_by(id=pet_id).first()
     PetModel.query.filter_by(id=pet_id).delete()
     db.session.commit()
+    logger.info(f'Delete pet: {pet.petname} successfully.')
     return redirect(url_for("pet.adm_pet"))
 
 
@@ -134,21 +141,27 @@ def user_edit_pet(pet_id,user_id):
             pet.masterid = master.id
 
             db.session.commit()
+            logger.info(f'{user_id} edit pet: {pet.petname} successfully.')
             return redirect(url_for("pet.user_pet",user_id = user_id))
         else:
             flash("The message format is incorrect.")
+            logger.warning(f'The message format is incorrect,{user_id} edit pet: {pet.petname} failed.')
             return redirect(url_for("pet.user_edit_pet", pet_id=pet_id))
 
 # user pet delete
 @bp.route("/<int:user_id>/user_pet_delete/<int:pet_id>")
 def user_pet_delete(pet_id,user_id):
+    user = UserModel.query.filter_by(id=user_id).first()
+    pet = PetModel.query.filter_by(id=pet_id).first()
     PetModel.query.filter_by(id=pet_id).delete()
     db.session.commit()
+    logger.info(f'{user.email} delete pet: {pet.petname} successfully.')
     return redirect(url_for("pet.user_pet",user_id = user_id))
 
 # user add pet
 @bp.route("/<int:user_id>/user_add_pet", methods=['GET', 'POST'])
 def user_add_pet(user_id):
+    user = UserModel.query.filter_by(id=user_id).first()
     if request.method == 'GET':
         return render_template("user/add_pet.html")
     else:
@@ -165,9 +178,11 @@ def user_add_pet(user_id):
                            sex=sex, birthday=birthday)
             db.session.add(pet)
             db.session.commit()
+            logger.info(f'{user.email} add pet: {petname} successfully.')
             return redirect(url_for("pet.user_pet",user_id = user_id))
         else:
             flash("The message format is incorrect.")
+            logger.warning(f'The message format is incorrect, {user.email} add pet failed.')
             return redirect(url_for("pet.user_add_pet",user_id = user_id))
 
 # pet add serve
@@ -188,9 +203,11 @@ def pet_add_serve(pet_id):
             pas = PASModel(petid=petid, serveid=serveid)
             db.session.add(pas)
             db.session.commit()
+            logger.info(f'Add serve: {servename} for pet: {pet.petname} successfully.')
             return redirect(url_for("pet.pet_detail",pet_id = pet_id))
         else:
             flash("The message format is incorrect.")
+            logger.warning(f'The message format is incorrect, add serve for pet: {pet.petname} failed.')
             return redirect(url_for("pet.pet_add_serve",pet_id=pet_id))
 
 # pet add serve
@@ -211,17 +228,22 @@ def serve_add_pet(serve_id):
             pas = PASModel(petid=petid, serveid=serveid)
             db.session.add(pas)
             db.session.commit()
+            logger.info(f'Add serve: {serve.servename} for pet: {petname} successfully.')
             return redirect(url_for("pet.pet_detail",pet_id = pet.id))
         else:
             flash("The message format is incorrect.")
+            logger.warning(f'The message format is incorrect, add serve: {serve.servename} for pet failed.')
             return redirect(url_for("pet.pet_add_serve",serve_id=serve_id))
 
 # pet serve delete
 @bp.route("/pas_delete/<int:pas_id>")
 def pas_delete(pas_id):
     pas = PASModel.query.filter_by(id=pas_id).first()
+    pet = PetModel.query.filter_by(id=pas.petid).first()
+    serve = PetModel.query.filter_by(id=pas.serveid).first()
     PASModel.query.filter_by(id=pas_id).delete()
     db.session.commit()
+    logger.info(f'Delete serve: {serve.servename} for pet: {pet.petname} successfully.')
     return redirect(url_for("pet.pet_detail",pet_id = pas.petid))
 
 # user - pet add serve
@@ -242,9 +264,11 @@ def user_serve_add_pet(serve_id):
             pas = PASModel(petid=petid, serveid=serveid)
             db.session.add(pas)
             db.session.commit()
+            logger.info(f'{pet.user.email} add serve: {serve.servename} for pet: {petname} successfully.')
             return redirect(url_for("pet.user_pet_detail",pet_id = pas.petid))
         else:
             flash("The message format is incorrect.")
+            logger.warning(f'The message format is incorrect, add serve: {serve.servename} for pet failed.')
             return redirect(url_for("pet.user_serve_add_pet",serve_id=serve_id))
 
 # user - pet detail
@@ -260,4 +284,5 @@ def user_pas_delete(pas_id):
     pas = PASModel.query.filter_by(id=pas_id).first()
     PASModel.query.filter_by(id=pas_id).delete()
     db.session.commit()
+    logger.info(f'{pas.pet.user.email} add serve: {pas.serve.servename} for pet: {pas.pet.petname} successfully.')
     return redirect(url_for("pet.user_pet_detail",pet_id = pas.petid))

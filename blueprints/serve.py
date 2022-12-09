@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
-from exts import db,app
-from model import UserModel, ServeModel
-from .form import Sign_up_Form, Sign_in_Form, Serve_Form
+from exts import db
+from model import ServeModel
+from .form import Serve_Form
+from config import logger
 from sqlalchemy import or_
 
 bp = Blueprint("serve", __name__, url_prefix="/serve")
@@ -32,9 +33,11 @@ def serve_add():
                                introduction=introduction)
             db.session.add(serve)
             db.session.commit()
+            logger.info(f'Add serve: {servename} successfully.')
             return redirect(url_for("serve.adm_serve"))
         else:
             flash("The message format is incorrect.")
+            logger.warning(f'The message format is incorrect, add serve failed.')
             return redirect(url_for("serve.serve_add"))
 
 # serve detail
@@ -59,9 +62,11 @@ def serve_edit(serve_id):
             serve.introduction = form.introduction.data
 
             db.session.commit()
+            logger.info(f'Edit serve: {serve.servename} successfully.')
             return redirect(url_for("serve.adm_serve"))
         else:
             flash("The message format is incorrect.")
+            logger.warning(f'The message format is incorrect, edit serve failed.')
             return redirect(url_for("serve.serve_edit",serve_id=serve_id))
 
 # serve delete

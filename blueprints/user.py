@@ -1,9 +1,10 @@
 # login interface
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
-from exts import db,app
-from model import UserModel, ServeModel, PetModel, PASModel
-from .form import Sign_up_Form, Sign_in_Form, Serve_Form, Add_User_Form, Edit_User_Form
+from exts import db
+from model import UserModel, ServeModel, PetModel
+from .form import Sign_up_Form, Sign_in_Form, Add_User_Form, Edit_User_Form
 from sqlalchemy import or_
+from config import logger
 bp = Blueprint("user", __name__, url_prefix="/user")
 
 
@@ -21,19 +22,19 @@ def sign_in():
             adm = UserModel.query.filter_by(email="Charlie@adm.com")[0]
             if adm and adm.password == password:
                 session['user_id'] = adm.id
-                app.logger.info(f'{email} sign in successfully.')
+                logger.info(f'{email} sign in successfully.')
                 return redirect(url_for("user.adm_user"))
             elif user and user.password == password:
                 session['user_id'] = user.id
-                app.logger.info(f'{email} sign in successfully.')
+                logger.info(f'{email} sign in successfully.')
                 return redirect(url_for("user.index_user"))
             else:
                 flash("The email address and password do not match.")
-                app.logger.warning('The email address and password do not match, sign in failed.')
+                logger.warning('The email address and password do not match, sign in failed.')
                 return redirect(url_for("user.sign_in"))
         else:
             flash("The email or password format is incorrect.")
-            app.logger.warning('The email or password format is incorrect, sign in failed.')
+            logger.warning('The email or password format is incorrect, sign in failed.')
             return redirect(url_for("user.sign_in"))
 
 
@@ -52,17 +53,17 @@ def sign_up():
             user = UserModel(email=email, username=username, password=password)
             db.session.add(user)
             db.session.commit()
-            app.logger.info(f'{email} sign up successfully.')
+            logger.info(f'{email} sign up successfully.')
             return redirect(url_for("user.sign_in"))
         else:
             email = form.email.data
             user_model = UserModel.query.filter_by(email=email).first()
             if user_model:
                 flash("The email address has been registered.")
-                app.logger.warning('The email address has been registered, sign up failed.')
+                logger.warning('The email address has been registered, sign up failed.')
             else:
                 flash("The message format is incorrect.")
-                app.logger.warning('The message format is incorrect, sign up failed.')
+                logger.warning('The message format is incorrect, sign up failed.')
             return redirect(url_for("user.sign_up"))
 
 
@@ -127,11 +128,11 @@ def user_edit(user_id):
             user.password = form.password.data
 
             db.session.commit()
-            app.logger.info(f'Edit {user.email} information successfully.')
+            logger.info(f'Edit {user.email} information successfully.')
             return redirect(url_for("user.adm_user"))
         else:
             flash("The message format is incorrect.")
-            app.logger.warning(f'The message format is incorrect, edit {user.email} information failed.')
+            logger.warning(f'The message format is incorrect, edit {user.email} information failed.')
             return redirect(url_for("user.user_edit", user_id=user_id))
 
 
@@ -141,7 +142,7 @@ def user_delete(user_id):
     user = UserModel.query.filter_by(id=user_id).first()
     UserModel.query.filter_by(id=user_id).delete()
     db.session.commit()
-    app.logger.info(f'Delete {user.email} successfully.')
+    logger.info(f'Delete {user.email} successfully.')
     return redirect(url_for("user.adm_user"))
 
 
@@ -171,17 +172,17 @@ def add_user():
             user = UserModel(email=email, username=username, password=password)
             db.session.add(user)
             db.session.commit()
-            app.logger.info(f'Add {user.email} successfully.')
+            logger.info(f'Add {user.email} successfully.')
             return redirect(url_for("user.adm_user"))
         else:
             email = form.email.data
             user_model = UserModel.query.filter_by(email=email).first()
             if user_model:
                 flash("The email address has been registered.")
-                app.logger.warning('The email address has been registered, add user failed.')
+                logger.warning('The email address has been registered, add user failed.')
             else:
                 flash("The message format is incorrect.")
-                app.logger.warning('The message format is incorrect, add user failed.')
+                logger.warning('The message format is incorrect, add user failed.')
             return redirect(url_for("user.add_user"))
 
 
@@ -201,11 +202,11 @@ def personal_edit(user_id):
             db.session.commit()
             # Clear all data in the session
             session.clear()
-            app.logger.info(f'{user.email} edit self information successfully.')
+            logger.info(f'{user.email} edit self information successfully.')
             return redirect(url_for("user.sign_in"))
         else:
             flash("The message format is incorrect.")
-            app.logger.warning(f'The message format is incorrect, {user.email} edit self information failed.')
+            logger.warning(f'The message format is incorrect, {user.email} edit self information failed.')
             return redirect(url_for("user.personal_edit", user_id=user_id))
 
 # user detail
